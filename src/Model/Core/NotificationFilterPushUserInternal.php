@@ -2,13 +2,13 @@
 namespace bunq\Model\Core;
 
 use bunq\Http\ApiClient;
-use bunq\Model\Generated\Endpoint\BunqResponseNotificationFilterPushUserList;
-use bunq\Model\Generated\Endpoint\NotificationFilterPushUser;
+use bunq\Model\Generated\Endpoint\BunqResponseNotificationFilterUrlList;
+use bunq\Model\Generated\Endpoint\NotificationFilterUrl;
 use bunq\Model\Generated\Object\NotificationFilterPush;
 
 /**
  */
-class NotificationFilterPushUserInternal extends NotificationFilterPushUser
+class NotificationFilterPushUserInternal extends NotificationFilterUrl
 {
     /**
      * Create notification filters with list response type.
@@ -16,12 +16,12 @@ class NotificationFilterPushUserInternal extends NotificationFilterPushUser
      * @param NotificationFilterPush[] $allNotificationFilter
      * @param string[] $allCustomHeader
      *
-     * @return BunqResponseNotificationFilterPushUserList
+     * @return BunqResponseNotificationFilterUrlList
      */
     public static function createWithListResponse(
         array $allNotificationFilter = [],
         array $allCustomHeader = []
-    ): BunqResponseNotificationFilterPushUserList {
+    ): BunqResponseNotificationFilterUrlList {
         $apiClient = new ApiClient(static::getApiContext());
         $responseRaw = $apiClient->post(
             vsprintf(
@@ -32,7 +32,7 @@ class NotificationFilterPushUserInternal extends NotificationFilterPushUser
             $allCustomHeader
         );
 
-        return BunqResponseNotificationFilterPushUserList::castFromBunqResponse(
+        return BunqResponseNotificationFilterUrlList::castFromBunqResponse(
             static::fromJsonList($responseRaw, self::OBJECT_TYPE_GET)
         );
     }

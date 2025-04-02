@@ -116,6 +116,7 @@ class SessionContext implements JsonSerializable
         $user = $sessionServer->getUserReference();
 
         if ($user instanceof UserApiKey) {
+            /** @phpstan-ignore-next-line */
             return $user->getRequestedByUser()->getReferencedObject()->getSessionTimeout();
         } else {
             return $user->getSessionTimeout();

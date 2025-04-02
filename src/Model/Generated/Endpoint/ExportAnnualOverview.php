@@ -63,6 +63,13 @@ class ExportAnnualOverview extends BunqModel
     protected $year;
 
     /**
+     * The status of the annual overview export.
+     *
+     * @var string
+     */
+    protected $status;
+
+    /**
      * The user to which this annual overview belongs.
      *
      * @var LabelUser
@@ -270,6 +277,27 @@ class ExportAnnualOverview extends BunqModel
     }
 
     /**
+     * The status of the annual overview export.
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use
+     * constructor.
+     *
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
      * The user to which this annual overview belongs.
      *
      * @return LabelUser
@@ -308,6 +336,10 @@ class ExportAnnualOverview extends BunqModel
         }
 
         if (!is_null($this->year)) {
+            return false;
+        }
+
+        if (!is_null($this->status)) {
             return false;
         }
 
