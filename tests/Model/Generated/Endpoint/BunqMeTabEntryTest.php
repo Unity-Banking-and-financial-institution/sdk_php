@@ -1,9 +1,9 @@
 <?php
 namespace bunq\test\Model\Generated\Endpoint;
 
-use bunq\Model\Generated\Endpoint\BunqMeTab;
-use bunq\Model\Generated\Endpoint\BunqMeTabEntry;
-use bunq\Model\Generated\Object\Amount;
+use bunq\Model\Generated\Endpoint\BunqMeTabApiObject;
+use bunq\Model\Generated\Endpoint\BunqMeTabEntryApiObject;
+use bunq\Model\Generated\Object\AmountObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -22,14 +22,14 @@ class BunqMeTabEntryTest extends BunqSdkTestBase
      */
     public function testBunqMeTab()
     {
-        $response = BunqMeTab::create(
-            new BunqMeTabEntry(
-                new Amount(self::PAYMENT_AMOUNT_DEFAULT, self::MONETARY_ACCOUNT_CURRENCY),
+        $response = BunqMeTabApiObject::create(
+            new BunqMeTabEntryApiObject(
+                new AmountObject(self::PAYMENT_AMOUNT_DEFAULT, self::MONETARY_ACCOUNT_CURRENCY),
                 self::ENTRY_DESCRIPTION
             )
         );
 
-        $tab = BunqMeTab::get($response->getValue());
+        $tab = BunqMeTabApiObject::get($response->getValue());
 
         static::assertNotNull($tab);
     }

@@ -1,7 +1,7 @@
 <?php
 namespace bunq\test\Model\Generated\Endpoint;
 
-use bunq\Model\Generated\Endpoint\MonetaryAccountJoint;
+use bunq\Model\Generated\Endpoint\MonetaryAccountJointApiObject;
 use bunq\test\BunqSdkTestBase;
 use bunq\Util\FileUtil;
 
@@ -23,7 +23,7 @@ class MonetaryAccountJointTest extends BunqSdkTestBase
         $jsonString =
             FileUtil::getFileContents(self::PATH_TO_MONETARY_ACCOUNT_JOINT_JSON);
 
-        $monetaryAccountJoint = MonetaryAccountJoint::createFromJsonString($jsonString);
+        $monetaryAccountJoint = MonetaryAccountJointApiObject::createFromJsonString($jsonString);
 
         static::assertNotNull($monetaryAccountJoint->getAllCoOwner());
 

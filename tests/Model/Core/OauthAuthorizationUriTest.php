@@ -3,7 +3,7 @@ namespace bunq\test\Model\Core;
 
 use bunq\Model\Core\BunqEnumOauthResponseType;
 use bunq\Model\Core\OauthAuthorizationUri;
-use bunq\Model\Generated\Endpoint\OauthClient;
+use bunq\Model\Generated\Endpoint\OauthClientApiObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -24,7 +24,7 @@ class OauthAuthorizationUriTest extends BunqSdkTestBase
         $uri = OauthAuthorizationUri::create(
             BunqEnumOauthResponseType::CODE(),
             self::TEST_REDIRECT_URI,
-            new OauthClient(self::TEST_STATUS),
+            new OauthClientApiObject(self::TEST_STATUS),
             self::TEST_STATE
         )->getAuthorizationUriString();
 

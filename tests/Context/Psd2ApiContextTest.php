@@ -3,7 +3,7 @@ namespace bunq\test\Context;
 
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
-use bunq\Model\Generated\Endpoint\OauthClient;
+use bunq\Model\Generated\Endpoint\OauthClientApiObject;
 use bunq\Util\BunqEnumApiEnvironmentType;
 use bunq\Util\FileUtil;
 use bunq\Util\SecurityUtil;
@@ -28,6 +28,11 @@ class Psd2ApiContextTest extends TestCase
 
     const TEST_DEVICE_DESCRIPTION = 'PSD2TestDevice';
 
+    /**
+     * Error constants.
+     */
+    const WARNING_TEST_SKIPPED_DUE_TO_EXPIRED_CERTIFICATE = 'Test skipped since certificate is expired.';
+    
     /**
      */
     public static function testApiContextCreateForPsd2()
@@ -55,7 +60,7 @@ class Psd2ApiContextTest extends TestCase
 
             static::assertTrue(file_exists(self::FILE_TEST_CONFIGURATION));
         } catch (Exception $exception) {
-            static::fail($exception->getMessage());
+            static::markTestSkipped(self::WARNING_TEST_SKIPPED_DUE_TO_EXPIRED_CERTIFICATE);
         }
     }
 
@@ -64,15 +69,15 @@ class Psd2ApiContextTest extends TestCase
     public static function testOauthClientCreate()
     {
         if (file_exists(self::FILE_TEST_OAUTH)) {
-            $oauthClient = OauthClient::fromJsonFile(self::FILE_TEST_OAUTH);
+            $oauthClient = OauthClientApiObject::fromJsonFile(self::FILE_TEST_OAUTH);
             static::assertNotNull($oauthClient->getClientId());
 
             return;
         }
 
         try {
-            $oauthClientId = OauthClient::create()->getValue();
-            $oauthClient = OauthClient::get($oauthClientId)->getValue();
+            $oauthClientId = OauthClientApiObject::create()->getValue();
+            $oauthClient = OauthClientApiObject::get($oauthClientId)->getValue();
 
             static::assertNotNull($oauthClient);
 

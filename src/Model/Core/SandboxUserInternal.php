@@ -5,11 +5,11 @@ use bunq\Context\ApiContext;
 use bunq\Exception\BunqException;
 use bunq\Http\ApiClient;
 use bunq\Model\Generated\Endpoint\BunqResponseSandboxUserPerson;
-use bunq\Model\Generated\Endpoint\SandboxUserPerson;
+use bunq\Model\Generated\Endpoint\SandboxUserPersonApiObject;
 
 /**
  */
-class SandboxUserInternal extends SandboxUserPerson
+class SandboxUserInternal extends SandboxUserPersonApiObject
 {
     /**
      * Error constants.

@@ -2,8 +2,8 @@
 namespace bunq\test\Model\Generated\Endpoint;
 
 use bunq\Model\Generated\Endpoint\BunqResponseInt;
-use bunq\Model\Generated\Endpoint\Payment;
-use bunq\Model\Generated\Object\Amount;
+use bunq\Model\Generated\Endpoint\PaymentApiObject;
+use bunq\Model\Generated\Object\AmountObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -15,12 +15,12 @@ use bunq\test\BunqSdkTestBase;
 class PaymentTest extends BunqSdkTestBase
 {
     /**
-     *  The amount of euros send to the other account/user.
+     *  The amount of euros sent to the other account/user.
      */
     const PAYMENT_AMOUNT_IN_EUR = '0.01';
 
     /**
-     *  The currency in which the money is send.
+     *  The currency in which the money is sent.
      */
     const PAYMENT_CURRENCY = 'EUR';
 
@@ -41,8 +41,8 @@ class PaymentTest extends BunqSdkTestBase
     {
         $this->skipTestIfNeededDueToInsufficientBalance();
 
-        $response = Payment::create(
-            new Amount(self::PAYMENT_AMOUNT_IN_EUR, self::PAYMENT_CURRENCY),
+        $response = PaymentApiObject::create(
+            new AmountObject(self::PAYMENT_AMOUNT_IN_EUR, self::PAYMENT_CURRENCY),
             $this->getPointerUserBravo(),
             self::PAYMENT_DESCRIPTION
         );
@@ -57,8 +57,8 @@ class PaymentTest extends BunqSdkTestBase
     {
         $this->skipTestIfNeededDueToInsufficientBalance();
 
-        $paymentId = Payment::create(
-            new Amount(self::PAYMENT_AMOUNT_IN_EUR, self::PAYMENT_CURRENCY),
+        $paymentId = PaymentApiObject::create(
+            new AmountObject(self::PAYMENT_AMOUNT_IN_EUR, self::PAYMENT_CURRENCY),
             $this->getSecondMonetaryAccountAlias(),
             self::PAYMENT_DESCRIPTION
         );

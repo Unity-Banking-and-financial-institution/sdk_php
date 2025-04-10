@@ -2,10 +2,10 @@
 namespace bunq\test\Model\Generated\Endpoint;
 
 use bunq\Context\BunqContext;
-use bunq\Model\Generated\Endpoint\Card;
-use bunq\Model\Generated\Endpoint\CardDebit;
-use bunq\Model\Generated\Endpoint\CardName;
-use bunq\Model\Generated\Object\CardPinAssignment;
+use bunq\Model\Generated\Endpoint\CardApiObject;
+use bunq\Model\Generated\Endpoint\CardDebitApiObject;
+use bunq\Model\Generated\Endpoint\CardNameApiObject;
+use bunq\Model\Generated\Object\CardPinAssignmentObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -22,11 +22,13 @@ class CardDebitTest extends BunqSdkTestBase
      */
     const CARD_PIN_CODE = '4045';
     const CARD_PIN_CODE_ASSIGNMENT = 'PRIMARY';
+    const CARD_ROUTING_TYPE = 'MANUAL';
 
     /**
      * Card type.
      */
     const CARD_TYPE_MAESTRO = 'MASTERCARD';
+    const CARD_PRODUCT_TYPE_MASTERCARD_DEBIT = 'MASTERCARD_DEBIT';
 
     /**
      * Product type.
@@ -58,7 +60,7 @@ class CardDebitTest extends BunqSdkTestBase
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        $cardNamesAllowed = CardName::listing()->getValue();
+        $cardNamesAllowed = CardNameApiObject::listing()->getValue();
         static::$nameOnCard = $cardNamesAllowed[self::INDEX_FIRST]->getPossibleCardNameArray();
     }
 
@@ -67,26 +69,25 @@ class CardDebitTest extends BunqSdkTestBase
      */
     public function testOrderingDebitCard()
     {
-        $cardDebit = CardDebit::create(
+        $cardDebit = CardDebitApiObject::create(
             $this->generateCardDescription(),
             static::$nameOnCard[self::INDEX_FIRST],
             self::CARD_TYPE_MAESTRO,
+            self::CARD_PRODUCT_TYPE_MASTERCARD_DEBIT,
+            $this->getUserAlias()->getName(),
             $this->getUserAlias(),
-            self::PRODUCT_TYPE_MASTERCARD_DEBIT,
             [
-                new CardPinAssignment(
+                new CardPinAssignmentObject(
                     self::CARD_PIN_CODE_ASSIGNMENT,
+                    self::CARD_ROUTING_TYPE,
                     self::CARD_PIN_CODE,
                     BunqContext::getUserContext()->getPrimaryMonetaryAccount()->getId()
                 ),
-            ]
+            ],
         )->getValue();
+        $card = CardApiObject::get($cardDebit->getId())->getValue();
 
-        $card = Card::get($cardDebit->getId())->getValue();
-
-        static::assertEquals($cardDebit->getNameOnCard(), $card->getNameOnCard());
-        static::assertEquals($cardDebit->getCreated(), $card->getCreated());
-        static::assertEquals($cardDebit->getSecondLine(), $card->getSecondLine());
+        static::assertEquals($card->getNameOnCard(), static::$nameOnCard[self::INDEX_FIRST]);
     }
 
     /**

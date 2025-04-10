@@ -2,9 +2,9 @@
 namespace bunq\test\Model\Generated\Endpoint;
 
 use bunq\Http\ApiClient;
-use bunq\Model\Generated\Endpoint\AttachmentPublic;
-use bunq\Model\Generated\Endpoint\AttachmentPublicContent;
-use bunq\Model\Generated\Endpoint\Avatar;
+use bunq\Model\Generated\Endpoint\AttachmentPublicApiObject;
+use bunq\Model\Generated\Endpoint\AttachmentPublicContentApiObject;
+use bunq\Model\Generated\Endpoint\AvatarApiObject;
 use bunq\test\BunqSdkTestBase;
 use bunq\Util\FileUtil;
 
@@ -36,16 +36,16 @@ class AvatarTest extends BunqSdkTestBase
             ApiClient::HEADER_CONTENT_TYPE => $this->getAttachmentContentType(),
         ];
 
-        $attachmentUuidBefore = AttachmentPublic::create(
+        $attachmentUuidBefore = AttachmentPublicApiObject::create(
             $fileContentsBefore,
             $customHeadersMap
         )->getValue();
-        $avatarUuid = Avatar::create($attachmentUuidBefore)->getValue();
+        $avatarUuid = AvatarApiObject::create($attachmentUuidBefore)->getValue();
 
-        $attachmentUuidAfter = Avatar::get($avatarUuid)->getValue();
+        $attachmentUuidAfter = AvatarApiObject::get($avatarUuid)->getValue();
         $imageInfoArray = $attachmentUuidAfter->getImage();
         $attachmentPublicUuid = $imageInfoArray[self::INDEX_FIRST]->getAttachmentPublicUuid();
-        $fileContentsAfter = AttachmentPublicContent::listing($attachmentPublicUuid)
+        $fileContentsAfter = AttachmentPublicContentApiObject::listing($attachmentPublicUuid)
             ->getValue();
 
         static::assertEquals($fileContentsBefore, $fileContentsAfter);

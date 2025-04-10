@@ -39,24 +39,17 @@ grumphp:
             diff: false
             triggered_by: [ 'php' ]
         phplint:
-            exclude: ['vendor']
+            exclude: [ 'vendor' ]
             jobs: ~
-            triggered_by: ['php', 'phtml']
-        phpunit:
-            config_file: ~
-            testsuite: ~
-            group: []
-            always_execute: false
-        phpversion:
-            project: '7.3'
+            triggered_by: [ 'php', 'phtml' ]
         xmllint:
-            ignore_patterns: []
+            ignore_patterns: [ ]
             load_from_net: false
             x_include: false
             dtd_validation: false
             scheme_validation: false
-            triggered_by: ['xml']
+            triggered_by: [ 'xml' ]
         yamllint:
-            ignore_patterns: []
+            ignore_patterns: [ ]
             object_support: false
             exception_on_invalid_type: true

@@ -5,11 +5,11 @@ use bunq\Context\ApiContext;
 use bunq\Exception\BunqException;
 use bunq\Http\ApiClient;
 use bunq\Model\Generated\Endpoint\BunqResponseInt;
-use bunq\Model\Generated\Endpoint\DeviceServer;
+use bunq\Model\Generated\Endpoint\DeviceServerApiObject;
 
 /**
  */
-class DeviceServerInternal extends DeviceServer
+class DeviceServerInternal extends DeviceServerApiObject
 {
     /**
      * Error constants.

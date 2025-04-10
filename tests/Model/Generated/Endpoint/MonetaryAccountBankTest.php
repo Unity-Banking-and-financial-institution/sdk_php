@@ -1,9 +1,8 @@
 <?php
 namespace bunq\test\Model\Generated\Endpoint;
 
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
 use bunq\test\BunqSdkTestBase;
-use bunq\test\Config;
 
 /**
  * Tests:
@@ -36,7 +35,7 @@ class MonetaryAccountBankTest extends BunqSdkTestBase
     public static function tearDownAfterClass(): void
     {
         if (!is_null(static::$monetaryAccountBankToCloseId)) {
-            MonetaryAccountBank::update(
+            MonetaryAccountBankApiObject::update(
                 static::$monetaryAccountBankToCloseId,
                 null,
                 null,
@@ -56,7 +55,7 @@ class MonetaryAccountBankTest extends BunqSdkTestBase
      */
     public function testCreateNewMonetaryAccount()
     {
-        static::$monetaryAccountBankToCloseId = MonetaryAccountBank::create(
+        static::$monetaryAccountBankToCloseId = MonetaryAccountBankApiObject::create(
             self::CURRENCY,
             uniqid(self::PREFIX_MONETARY_ACCOUNT_DESCRIPTION)
         )->getValue();

@@ -1,9 +1,9 @@
 <?php
 namespace bunq\test\Model\Generated\Endpoint;
 
-use bunq\Model\Generated\Endpoint\Payment;
-use bunq\Model\Generated\Endpoint\PaymentBatch;
-use bunq\Model\Generated\Object\Amount;
+use bunq\Model\Generated\Endpoint\PaymentApiObject;
+use bunq\Model\Generated\Endpoint\PaymentBatchApiObject;
+use bunq\Model\Generated\Object\AmountObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -29,13 +29,13 @@ class PaymentBatchTest extends BunqSdkTestBase
      */
     public function testSendBatchPayment()
     {
-        $response = PaymentBatch::create($this->createPaymentArray());
+        $response = PaymentBatchApiObject::create($this->createPaymentArray());
 
         self::assertTrue(is_integer($response->getValue()));
     }
 
     /**
-     * @return Payment[]
+     * @return PaymentApiObject[]
      */
     private function createPaymentArray(): array
     {
@@ -44,8 +44,8 @@ class PaymentBatchTest extends BunqSdkTestBase
         $allPayment = [];
 
         while (count($allPayment) < self::MAXIMUM_PAYMENT_ENTRIES) {
-            $payment = new Payment(
-                new Amount(self::PAYMENT_AMOUNT_DEFAULT, self::PAYMENT_CURRENCY),
+            $payment = new PaymentApiObject(
+                new AmountObject(self::PAYMENT_AMOUNT_DEFAULT, self::PAYMENT_CURRENCY),
                 $this->getPointerUserBravo(),
                 self::PAYMENT_DESCRIPTION
             );

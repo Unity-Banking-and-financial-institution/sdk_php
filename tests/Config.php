@@ -1,7 +1,7 @@
 <?php
 namespace bunq\test;
 
-use bunq\Model\Generated\Object\Pointer;
+use bunq\Model\Generated\Object\PointerObject;
 use bunq\Util\FileUtil;
 
 /**
@@ -60,25 +60,25 @@ class Config
     }
 
     /**
-     * @return Pointer
+     * @return PointerObject
      */
-    public static function getCounterPartyAliasOther(): Pointer
+    public static function getCounterPartyAliasOther(): PointerObject
     {
         $type = static::getConfigFile()[self::FIELD_COUNTER_PARTY_OTHER][self::FIELD_ALIAS_TYPE];
         $alias = static::getConfigFile()[self::FIELD_COUNTER_PARTY_OTHER][self::FIELD_ALIAS];
 
-        return new Pointer($type, $alias);
+        return new PointerObject($type, $alias);
     }
 
     /**
-     * @return Pointer
+     * @return PointerObject
      */
-    public static function getCounterPartyAliasSelf(): Pointer
+    public static function getCounterPartyAliasSelf(): PointerObject
     {
         $type = static::getConfigFile()[self::FIELD_COUNTER_PARTY_SELF][self::FIELD_ALIAS_TYPE];
         $alias = static::getConfigFile()[self::FIELD_COUNTER_PARTY_SELF][self::FIELD_ALIAS];
 
-        return new Pointer($type, $alias);
+        return new PointerObject($type, $alias);
     }
 
     /**

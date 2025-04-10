@@ -2,8 +2,8 @@
 namespace bunq\test\Model\Generated\Endpoint;
 
 use bunq\Http\ApiClient;
-use bunq\Model\Generated\Endpoint\AttachmentPublic;
-use bunq\Model\Generated\Endpoint\AttachmentPublicContent;
+use bunq\Model\Generated\Endpoint\AttachmentPublicApiObject;
+use bunq\Model\Generated\Endpoint\AttachmentPublicContentApiObject;
 use bunq\test\BunqSdkTestBase;
 use bunq\Util\FileUtil;
 
@@ -30,8 +30,8 @@ class AttachmentPublicTest extends BunqSdkTestBase
             ApiClient::HEADER_ATTACHMENT_DESCRIPTION => $this->getAttachmentDescription(),
         ];
 
-        $beforeUuid = AttachmentPublic::create($beforeBytes, $customHeadersMap)->getValue();
-        $bytesAfter = AttachmentPublicContent::listing($beforeUuid)->getValue();
+        $beforeUuid = AttachmentPublicApiObject::create($beforeBytes, $customHeadersMap)->getValue();
+        $bytesAfter = AttachmentPublicContentApiObject::listing($beforeUuid)->getValue();
 
         static::assertEquals($beforeBytes, $bytesAfter);
     }

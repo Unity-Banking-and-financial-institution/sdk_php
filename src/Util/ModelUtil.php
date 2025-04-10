@@ -3,10 +3,10 @@ namespace bunq\Util;
 
 use bunq\Exception\BunqException;
 use bunq\Model\Core\BunqModel;
-use bunq\Model\Generated\Endpoint\UserApiKey;
-use bunq\Model\Generated\Endpoint\UserCompany;
-use bunq\Model\Generated\Endpoint\UserPaymentServiceProvider;
-use bunq\Model\Generated\Endpoint\UserPerson;
+use bunq\Model\Generated\Endpoint\UserApiKeyApiObject;
+use bunq\Model\Generated\Endpoint\UserCompanyApiObject;
+use bunq\Model\Generated\Endpoint\UserPaymentServiceProviderApiObject;
+use bunq\Model\Generated\Endpoint\UserPersonApiObject;
 
 /**
  */
@@ -136,19 +136,19 @@ class ModelUtil
     }
 
     /**
-     * @param UserPerson $userPerson
-     * @param UserCompany $userCompany
-     * @param UserApiKey $userApiKey
-     * @param UserPaymentServiceProvider $userPaymentServiceProvider
+     * @param UserPersonApiObject $userPerson
+     * @param UserCompanyApiObject $userCompany
+     * @param UserApiKeyApiObject $userApiKey
+     * @param UserPaymentServiceProviderApiObject $userPaymentServiceProvider
      *
-     * @return UserCompany|UserPerson|UserApiKey|UserPaymentServiceProvider
+     * @return UserCompanyApiObject|UserPersonApiObject|UserApiKeyApiObject|UserPaymentServiceProviderApiObject
      * @throws BunqException
      */
     public static function getUserReference(
-        UserPerson $userPerson = null,
-        UserCompany $userCompany = null,
-        UserApiKey $userApiKey = null,
-        UserPaymentServiceProvider $userPaymentServiceProvider = null
+        UserPersonApiObject $userPerson = null,
+        UserCompanyApiObject $userCompany = null,
+        UserApiKeyApiObject $userApiKey = null,
+        UserPaymentServiceProviderApiObject $userPaymentServiceProvider = null
     ) {
         if ((is_null($userPerson) && is_null($userApiKey))
             && !is_null($userCompany)

@@ -2,20 +2,19 @@
 namespace bunq\test\Model\Object;
 
 use bunq\Model\Core\BunqModel;
-use bunq\Model\Generated\Endpoint\BunqMeTab;
-use bunq\Model\Generated\Endpoint\DraftPayment;
-use bunq\Model\Generated\Endpoint\MasterCardAction;
-use bunq\Model\Generated\Endpoint\MonetaryAccount;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Endpoint\Payment;
-use bunq\Model\Generated\Endpoint\PaymentBatch;
-use bunq\Model\Generated\Endpoint\RequestInquiry;
-use bunq\Model\Generated\Endpoint\RequestResponse;
-use bunq\Model\Generated\Endpoint\ScheduleInstance;
-use bunq\Model\Generated\Endpoint\SchedulePayment;
-use bunq\Model\Generated\Endpoint\ShareInviteMonetaryAccountInquiry;
-use bunq\Model\Generated\Endpoint\ShareInviteMonetaryAccountResponse;
-use bunq\Model\Generated\Object\NotificationUrl;
+use bunq\Model\Generated\Endpoint\BunqMeTabApiObject;
+use bunq\Model\Generated\Endpoint\DraftPaymentApiObject;
+use bunq\Model\Generated\Endpoint\MasterCardActionApiObject;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
+use bunq\Model\Generated\Endpoint\PaymentApiObject;
+use bunq\Model\Generated\Endpoint\PaymentBatchApiObject;
+use bunq\Model\Generated\Endpoint\RequestInquiryApiObject;
+use bunq\Model\Generated\Endpoint\RequestResponseApiObject;
+use bunq\Model\Generated\Endpoint\ScheduleInstanceApiObject;
+use bunq\Model\Generated\Endpoint\SchedulePaymentApiObject;
+use bunq\Model\Generated\Endpoint\ShareInviteMonetaryAccountInquiryApiObject;
+use bunq\Model\Generated\Endpoint\ShareInviteMonetaryAccountResponseApiObject;
+use bunq\Model\Generated\Object\NotificationUrlObject;
 use bunq\test\BunqSdkTestBase;
 use bunq\Util\FileUtil;
 
@@ -79,7 +78,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_MUTATION_MODEL,
-            Payment::class,
+            PaymentApiObject::class,
             self::GETTER_PAYMENT
         );
     }
@@ -90,21 +89,19 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_BUNQ_ME_TAB_MODEL,
-            BunqMeTab::class,
+            BunqMeTabApiObject::class,
             self::GETTER_BUNQ_ME_TAB
         );
     }
 
     /**
      */
-    public function testGetMonetaryAccountModel()
+    public function testGetMonetaryAccountBankModel()
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_MONETARY_ACCOUNT_BANK_MODEL,
-            MonetaryAccount::class,
-            self::GETTER_MONETARY_ACCOUNT,
+            MonetaryAccountBankApiObject::class,
             self::GETTER_MONETARY_ACCOUNT_BANK,
-            MonetaryAccountBank::class
         );
     }
 
@@ -114,7 +111,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_PAYMENT_BATCH_MODEL,
-            PaymentBatch::class,
+            PaymentBatchApiObject::class,
             self::GETTER_PAYMENT_BATCH
         );
     }
@@ -125,7 +122,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_REQUEST_RESPONSE_MODEL,
-            RequestResponse::class,
+            RequestResponseApiObject::class,
             self::GETTER_REQUEST_RESPONSE
         );
     }
@@ -136,7 +133,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_REQUEST_INQUIRY_MODEL,
-            RequestInquiry::class,
+            RequestInquiryApiObject::class,
             self::GETTER_REQUEST_INQUIRY
         );
     }
@@ -147,7 +144,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_SCHEDULE_PAYMENT_MODEL,
-            SchedulePayment::class,
+            SchedulePaymentApiObject::class,
             self::GETTER_SCHEDULE_PAYMENT
         );
     }
@@ -158,7 +155,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_SHARE_INVITE_BANK_RESPONSE_MODEL,
-            ShareInviteMonetaryAccountResponse::class,
+            ShareInviteMonetaryAccountResponseApiObject::class,
             self::GETTER_SHARE_INVITE_BANK_RESPONSE
         );
     }
@@ -169,7 +166,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_SCHEDULE_INSTANCE_MODEL,
-            ScheduleInstance::class,
+            ScheduleInstanceApiObject::class,
             self::GETTER_SCHEDULE_INSTANCE
         );
     }
@@ -180,7 +177,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_SHARE_INVITE_BANK_INQUIRY_MODEL,
-            ShareInviteMonetaryAccountInquiry::class,
+            ShareInviteMonetaryAccountInquiryApiObject::class,
             self::GETTER_SHARE_INVITE_BANK_INQUIRY
         );
     }
@@ -191,7 +188,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_MASTER_CARD_ACTION_MODEL,
-            MasterCardAction::class,
+            MasterCardActionApiObject::class,
             self::GETTER_MASTER_CARD_ACTION
         );
     }
@@ -202,7 +199,7 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_DRAFT_PAYMENT_MODEL,
-            DraftPayment::class,
+            DraftPaymentApiObject::class,
             self::GETTER_DRAFT_PAYMENT
         );
     }
@@ -223,7 +220,6 @@ class NotificationUrlTest extends BunqSdkTestBase
     ) {
         $jsonExpectedString = FileUtil::getFileContents($expectedJsonFileName);
         $notificationUrl = $this->getNotificationUrlFromJson($jsonExpectedString);
-
         $model = $notificationUrl->getObject()->$referencedObjectGetterName();
         $referencedModel = $notificationUrl->getObject()->getReferencedObject();
 
@@ -242,16 +238,16 @@ class NotificationUrlTest extends BunqSdkTestBase
     /**
      * @param string $jsonString
      *
-     * @return NotificationUrl
+     * @return NotificationUrlObject
      */
-    private function getNotificationUrlFromJson(string $jsonString): NotificationUrl
+    private function getNotificationUrlFromJson(string $jsonString): NotificationUrlObject
     {
         $json = json_decode($jsonString, true);
 
         static::assertNotNull($json, self::ERROR_ASSERT_JSON_DECODE_ERROR);
 
         $notificationObject = $this->getNotificationObjectJsonString($json);
-        $notificationUrl = NotificationUrl::createFromJsonString($notificationObject);
+        $notificationUrl = NotificationUrlObject::createFromJsonString($notificationObject);
         $notificationUrl = self::assertInstanceOfNotificationUrl($notificationUrl);
 
         static::assertNotNull($notificationUrl->getObject(), self::ERROR_ASSERT_OBJECT_IS_NULL_ERROR);
@@ -282,13 +278,13 @@ class NotificationUrlTest extends BunqSdkTestBase
     /**
      * @param BunqModel $model
      *
-     * @return NotificationUrl
+     * @return NotificationUrlObject
      */
-    private function assertInstanceOfNotificationUrl(BunqModel $model): NotificationUrl
+    private function assertInstanceOfNotificationUrl(BunqModel $model): NotificationUrlObject
     {
-        static::assertInstanceOf(NotificationUrl::class, $model);
+        static::assertInstanceOf(NotificationUrlObject::class, $model);
 
-        /* @var NotificationUrl $model */
+        /* @var NotificationUrlObject $model */
 
         return $model;
     }

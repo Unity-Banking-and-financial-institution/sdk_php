@@ -3,8 +3,8 @@ namespace bunq\test\Http;
 
 use bunq\Http\BunqResponse;
 use bunq\Http\Pagination;
-use bunq\Model\Generated\Endpoint\Payment;
-use bunq\Model\Generated\Object\Amount;
+use bunq\Model\Generated\Endpoint\PaymentApiObject;
+use bunq\Model\Generated\Object\AmountObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -23,7 +23,7 @@ class PaginationScenarioTest extends BunqSdkTestBase
     /**
      * Constants for payment creation.
      */
-    const PAYMENT_AMOUNT_EUR = '0.01';
+    const PAYMENT_AmountObject_EUR = '0.01';
     const PAYMENT_CURRENCY = 'EUR';
     const PAYMENT_DESCRIPTION = 'PHP test Payment';
 
@@ -64,7 +64,7 @@ class PaginationScenarioTest extends BunqSdkTestBase
     {
         $this->skipTestIfNeededDueToInsufficientBalance();
 
-        for ($i = self::NUMBER_ZERO; $i < self::getPaymentsMissingCount(); ++$i) {
+        for ($i = self::NUMBER_ZERO; $i < self::getPaymentEndpointsMissingCount(); ++$i) {
             $this->createPayment();
             sleep(self::RATE_LIMIT_TIMEOUT);
         }
@@ -73,13 +73,13 @@ class PaginationScenarioTest extends BunqSdkTestBase
     /**
      * @return int
      */
-    private static function getPaymentsMissingCount(): int
+    private static function getPaymentEndpointsMissingCount(): int
     {
         return self::PAYMENT_REQUIRED_COUNT_MINIMUM - count(static::getPaymentsRequired());
     }
 
     /**
-     * @return Payment[]
+     * @return PaymentApiObject[]
      */
     private static function getPaymentsRequired(): array
     {
@@ -96,15 +96,15 @@ class PaginationScenarioTest extends BunqSdkTestBase
      */
     private static function listPayments(array $urlParams): BunqResponse
     {
-        return Payment::listing(null, $urlParams);
+        return PaymentApiObject::listing(null, $urlParams);
     }
 
     /**
      */
     public function createPayment()
     {
-        Payment::create(
-            new Amount(self::PAYMENT_AMOUNT_EUR, self::PAYMENT_CURRENCY),
+        PaymentApiObject::create(
+            new AmountObject(self::PAYMENT_AmountObject_EUR, self::PAYMENT_CURRENCY),
             $this->getSecondMonetaryAccountAlias(),
             self::PAYMENT_DESCRIPTION
         );
