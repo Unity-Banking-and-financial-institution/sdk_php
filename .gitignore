@@ -72,6 +72,3 @@ tmp/
 
 # PHPUnit
 .phpunit.result.cache
-
-# TODO REMOVE THIS - THIS SHOULD NOT BE MERGED
-src/Model/Generated/

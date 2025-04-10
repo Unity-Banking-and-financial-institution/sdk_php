@@ -29,17 +29,10 @@ grumphp:
                 - "var_dump("
                 - "exit;"
         phpcsfixer2:
-            allow_risky: false
-            cache_file: ~
+            config_contains_finder: true
             config: .php_cs
-            rules: [ ]
-            using_cache: ~
-            config_contains_finder: false
-            verbose: true
-            diff: false
-            triggered_by: [ 'php' ]
         phplint:
-            exclude: [ 'vendor' ]
+            exclude: [ 'vendor', 'src/Model/Generated' ]
             jobs: ~
             triggered_by: [ 'php', 'phtml' ]
         xmllint:
