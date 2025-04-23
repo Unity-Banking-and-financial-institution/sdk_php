@@ -68,6 +68,13 @@ class CompanyEmployeeCardApiObject extends BunqModel
     protected $numberOfCompanyEmployeeCardReceiptPending;
 
     /**
+     * The company employee's monthly cumulative card limit.
+     *
+     * @var CompanyEmployeeCardLimitApiObject
+     */
+    protected $companyEmployeeCardLimit;
+
+    /**
      * The pointer to the employee for which you want to create a card.
      *
      * @var PointerObject
@@ -276,6 +283,26 @@ class CompanyEmployeeCardApiObject extends BunqModel
     }
 
     /**
+     * The company employee's monthly cumulative card limit.
+     *
+     * @return CompanyEmployeeCardLimitApiObject
+     */
+    public function getCompanyEmployeeCardLimit()
+    {
+        return $this->companyEmployeeCardLimit;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param CompanyEmployeeCardLimitApiObject $companyEmployeeCardLimit
+     */
+    public function setCompanyEmployeeCardLimit($companyEmployeeCardLimit)
+    {
+        $this->companyEmployeeCardLimit = $companyEmployeeCardLimit;
+    }
+
+    /**
      * @return bool
      */
     public function isAllFieldNull()
@@ -301,6 +328,10 @@ class CompanyEmployeeCardApiObject extends BunqModel
         }
 
         if (!is_null($this->numberOfCompanyEmployeeCardReceiptPending)) {
+            return false;
+        }
+
+        if (!is_null($this->companyEmployeeCardLimit)) {
             return false;
         }
 

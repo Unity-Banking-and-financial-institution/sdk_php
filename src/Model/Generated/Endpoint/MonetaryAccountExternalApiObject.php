@@ -180,7 +180,7 @@ class MonetaryAccountExternalApiObject extends BunqModel
     /**
      * The profiles of the account.
      *
-     * @var MonetaryAccountProfileApiObject[]
+     * @var MonetaryAccountProfileApiObject
      */
     protected $monetaryAccountProfile;
 
@@ -253,6 +253,13 @@ class MonetaryAccountExternalApiObject extends BunqModel
      * @var BirdeeInvestmentPortfolioApiObject
      */
     protected $birdeeInvestmentPortfolio;
+
+    /**
+     * The access of this Monetary Account.
+     *
+     * @var MonetaryAccountAccessApiObject[]
+     */
+    protected $allAccess;
 
     /**
      * The currency of the MonetaryAccountExternal as an ISO 4217 formatted currency code.
@@ -890,7 +897,7 @@ self::FIELD_SETTING => $setting],
     /**
      * The profiles of the account.
      *
-     * @return MonetaryAccountProfileApiObject[]
+     * @return MonetaryAccountProfileApiObject
      */
     public function getMonetaryAccountProfile()
     {
@@ -900,7 +907,7 @@ self::FIELD_SETTING => $setting],
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param MonetaryAccountProfileApiObject[] $monetaryAccountProfile
+     * @param MonetaryAccountProfileApiObject $monetaryAccountProfile
      */
     public function setMonetaryAccountProfile($monetaryAccountProfile)
     {
@@ -1108,6 +1115,26 @@ self::FIELD_SETTING => $setting],
     }
 
     /**
+     * The access of this Monetary Account.
+     *
+     * @return MonetaryAccountAccessApiObject[]
+     */
+    public function getAllAccess()
+    {
+        return $this->allAccess;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param MonetaryAccountAccessApiObject[] $allAccess
+     */
+    public function setAllAccess($allAccess)
+    {
+        $this->allAccess = $allAccess;
+    }
+
+    /**
      * @return bool
      */
     public function isAllFieldNull()
@@ -1225,6 +1252,10 @@ self::FIELD_SETTING => $setting],
         }
 
         if (!is_null($this->birdeeInvestmentPortfolio)) {
+            return false;
+        }
+
+        if (!is_null($this->allAccess)) {
             return false;
         }
 

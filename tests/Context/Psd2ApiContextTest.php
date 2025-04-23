@@ -27,11 +27,6 @@ class Psd2ApiContextTest extends TestCase
     const FILE_TEST_PRIVATE_KEY = __DIR__ . '/PSD2/private.pem';
 
     const TEST_DEVICE_DESCRIPTION = 'PSD2TestDevice';
-
-    /**
-     * Error constants.
-     */
-    const WARNING_TEST_SKIPPED_DUE_TO_EXPIRED_CERTIFICATE = 'Test skipped since certificate is expired.';
     
     /**
      */
@@ -45,23 +40,19 @@ class Psd2ApiContextTest extends TestCase
             return;
         }
 
-        try {
-            $apiContext = ApiContext::createForPsd2(
-                BunqEnumApiEnvironmentType::SANDBOX(),
-                SecurityUtil::getCertificateFromFile(self::FILE_TEST_CERTIFICATE),
-                SecurityUtil::getPrivateKeyFromFile(self::FILE_TEST_PRIVATE_KEY),
-                [
-                    SecurityUtil::getCertificateFromFile(self::FILE_TEST_CERTIFICATE_CHAIN),
-                ],
-                self::TEST_DEVICE_DESCRIPTION
-            );
-            $apiContext->save(self::FILE_TEST_CONFIGURATION);
-            BunqContext::loadApiContext($apiContext);
+        $apiContext = ApiContext::createForPsd2(
+            BunqEnumApiEnvironmentType::SANDBOX(),
+            SecurityUtil::getCertificateFromFile(self::FILE_TEST_CERTIFICATE),
+            SecurityUtil::getPrivateKeyFromFile(self::FILE_TEST_PRIVATE_KEY),
+            [
+                SecurityUtil::getCertificateFromFile(self::FILE_TEST_CERTIFICATE_CHAIN),
+            ],
+            self::TEST_DEVICE_DESCRIPTION
+        );
+        $apiContext->save(self::FILE_TEST_CONFIGURATION);
+        BunqContext::loadApiContext($apiContext);
 
-            static::assertTrue(file_exists(self::FILE_TEST_CONFIGURATION));
-        } catch (Exception $exception) {
-            static::markTestSkipped(self::WARNING_TEST_SKIPPED_DUE_TO_EXPIRED_CERTIFICATE);
-        }
+        static::assertTrue(file_exists(self::FILE_TEST_CONFIGURATION));
     }
 
     /**

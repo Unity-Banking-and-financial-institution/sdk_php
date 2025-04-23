@@ -136,7 +136,7 @@ class MonetaryAccountCardApiObject extends BunqModel
     /**
      * The profiles of the account.
      *
-     * @var MonetaryAccountProfileApiObject[]
+     * @var MonetaryAccountProfileApiObject
      */
     protected $monetaryAccountProfile;
 
@@ -217,6 +217,13 @@ class MonetaryAccountCardApiObject extends BunqModel
      * @var BirdeeInvestmentPortfolioApiObject
      */
     protected $birdeeInvestmentPortfolio;
+
+    /**
+     * The access of this Monetary Account.
+     *
+     * @var MonetaryAccountAccessApiObject[]
+     */
+    protected $allAccess;
 
     /**
      * Get a specific MonetaryAccountCard.
@@ -599,7 +606,7 @@ class MonetaryAccountCardApiObject extends BunqModel
     /**
      * The profiles of the account.
      *
-     * @return MonetaryAccountProfileApiObject[]
+     * @return MonetaryAccountProfileApiObject
      */
     public function getMonetaryAccountProfile()
     {
@@ -609,7 +616,7 @@ class MonetaryAccountCardApiObject extends BunqModel
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param MonetaryAccountProfileApiObject[] $monetaryAccountProfile
+     * @param MonetaryAccountProfileApiObject $monetaryAccountProfile
      */
     public function setMonetaryAccountProfile($monetaryAccountProfile)
     {
@@ -838,6 +845,26 @@ class MonetaryAccountCardApiObject extends BunqModel
     }
 
     /**
+     * The access of this Monetary Account.
+     *
+     * @return MonetaryAccountAccessApiObject[]
+     */
+    public function getAllAccess()
+    {
+        return $this->allAccess;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param MonetaryAccountAccessApiObject[] $allAccess
+     */
+    public function setAllAccess($allAccess)
+    {
+        $this->allAccess = $allAccess;
+    }
+
+    /**
      * @return bool
      */
     public function isAllFieldNull()
@@ -947,6 +974,10 @@ class MonetaryAccountCardApiObject extends BunqModel
         }
 
         if (!is_null($this->birdeeInvestmentPortfolio)) {
+            return false;
+        }
+
+        if (!is_null($this->allAccess)) {
             return false;
         }
 

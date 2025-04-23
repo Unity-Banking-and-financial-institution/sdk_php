@@ -14,7 +14,6 @@ use bunq\Model\Generated\Endpoint\IdealMerchantTransactionApiObject;
 use bunq\Model\Generated\Endpoint\InvoiceApiObject;
 use bunq\Model\Generated\Endpoint\MasterCardActionApiObject;
 use bunq\Model\Generated\Endpoint\MonetaryAccountApiObject;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
 use bunq\Model\Generated\Endpoint\PaymentApiObject;
 use bunq\Model\Generated\Endpoint\PaymentBatchApiObject;
 use bunq\Model\Generated\Endpoint\RequestInquiryApiObject;
@@ -85,11 +84,6 @@ class NotificationAnchorObjectObject extends BunqModel implements AnchorObjectIn
      * @var MonetaryAccountApiObject
      */
     protected $monetaryAccount;
-
-    /**
-     * @var MonetaryAccountBankApiObject
-     */
-    protected $monetaryAccountBank;
 
     /**
      * @var PaymentApiObject
@@ -402,14 +396,6 @@ class NotificationAnchorObjectObject extends BunqModel implements AnchorObjectIn
     }
 
     /**
-     * @return MonetaryAccountBankApiObject
-     */
-    public function getMonetaryAccountBank()
-    {
-        return $this->monetaryAccountBank;
-    }
-
-    /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
      * @param RequestResponseApiObject $requestResponse
@@ -593,10 +579,6 @@ class NotificationAnchorObjectObject extends BunqModel implements AnchorObjectIn
 
         if (!is_null($this->user)) {
             return $this->user;
-        }
-
-        if (!is_null($this->monetaryAccountBank)) {
-            return $this->monetaryAccountBank;
         }
 
         throw new BunqException(self::ERROR_NULL_FIELDS);

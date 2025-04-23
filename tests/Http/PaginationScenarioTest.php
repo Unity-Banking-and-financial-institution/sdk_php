@@ -23,33 +23,32 @@ class PaginationScenarioTest extends BunqSdkTestBase
     /**
      * Constants for payment creation.
      */
-    const PAYMENT_AmountObject_EUR = '0.01';
+    const PAYMENT_AMOUNT_EUR = '0.01';
     const PAYMENT_CURRENCY = 'EUR';
     const PAYMENT_DESCRIPTION = 'PHP test Payment';
 
     /**
      * RateLimit constants.
      */
-    const RATE_LIMIT_TIMEOUT = 1;
+    const RATE_LIMIT_TIMEOUT_LONG = 3;
+    const RATE_LIMIT_TIMEOUT_SHORT = 1;
 
     /**
      */
     public function testApiScenarioPaymentListingWithPagination()
     {
         $this->ensureEnoughPayments();
+
         $paymentsExpected = static::getPaymentsRequired();
         $paginationCountOnly = new Pagination();
         $paginationCountOnly->setCount(self::PAYMENT_LISTING_PAGE_SIZE);
 
+        sleep(self::RATE_LIMIT_TIMEOUT_LONG);
         $responseLatest = static::listPayments($paginationCountOnly->getUrlParamsCountOnly());
         $paginationLatest = $responseLatest->getPagination();
 
-        sleep(self::RATE_LIMIT_TIMEOUT);
-
         $responsePrevious = static::listPayments($paginationLatest->getUrlParamsPreviousPage());
         $paginationPrevious = $responsePrevious->getPagination();
-
-        sleep(self::RATE_LIMIT_TIMEOUT);
 
         $responsePreviousNext = static::listPayments($paginationPrevious->getUrlParamsNextPage());
 
@@ -66,7 +65,7 @@ class PaginationScenarioTest extends BunqSdkTestBase
 
         for ($i = self::NUMBER_ZERO; $i < self::getPaymentEndpointsMissingCount(); ++$i) {
             $this->createPayment();
-            sleep(self::RATE_LIMIT_TIMEOUT);
+            sleep(self::RATE_LIMIT_TIMEOUT_SHORT);
         }
     }
 
@@ -104,7 +103,7 @@ class PaginationScenarioTest extends BunqSdkTestBase
     public function createPayment()
     {
         PaymentApiObject::create(
-            new AmountObject(self::PAYMENT_AmountObject_EUR, self::PAYMENT_CURRENCY),
+            new AmountObject(self::PAYMENT_AMOUNT_EUR, self::PAYMENT_CURRENCY),
             $this->getSecondMonetaryAccountAlias(),
             self::PAYMENT_DESCRIPTION
         );

@@ -17,14 +17,14 @@ class SandboxUserInternal extends SandboxUserPersonApiObject
     const ERROR_API_CONTEXT_IS_NULL = 'ApiContext should not be null, use the generated class instead.';
 
     /**
-     * @param string[] $customHeaders
+     * @param string[] $allCustomHeader
      * @param ApiContext|null $apiContext
      *
      * @return BunqResponseSandboxUserPerson
      * @throws BunqException
      */
     public static function create(
-        array $customHeaders = [],
+        array $allCustomHeader = [],
         ApiContext $apiContext = null
     ): BunqResponseSandboxUserPerson {
         if (is_null($apiContext)) {
@@ -38,7 +38,7 @@ class SandboxUserInternal extends SandboxUserPersonApiObject
                 []
             ),
             [],
-            $customHeaders
+            $allCustomHeader
         );
 
         return BunqResponseSandboxUserPerson::castFromBunqResponse(

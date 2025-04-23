@@ -68,8 +68,8 @@ class ModelUtil
     public static function getModelClassNameQualifiedOrNull(string $model)
     {
         $classNameOverride = vsprintf(self::FORMAT_QUALIFIED_OVERRIDE_TYPE, [$model]);
-        $classNameModel = vsprintf(self::FORMAT_QUALIFIED_MODEL_TYPE, [$model]);
-        $classNameObject = vsprintf(self::FORMAT_QUALIFIED_OBJECT_TYPE, [$model]);
+        $classNameModel = vsprintf(self::FORMAT_QUALIFIED_MODEL_TYPE, [static::determineClassNameModel($model)]);
+        $classNameObject = vsprintf(self::FORMAT_QUALIFIED_OBJECT_TYPE, [static::determineClassNameObject($model)]);
 
         if (static::isClassSubClassOfBunqModel($classNameOverride)) {
             return $classNameOverride;
@@ -80,6 +80,32 @@ class ModelUtil
         } else {
             return null;
         }
+    }
+
+    private static function determineClassNameModel(string $model): string
+    {
+        if (substr($model, -9) === 'ApiObject') {
+            return $model;
+        }
+
+        return $model . 'ApiObject';
+    }
+
+    /**
+     * Determines the correct class name for object format
+     * If the model name already ends with 'Object', return as is
+     * Otherwise, append 'Object' to the end
+     *
+     * @param string $model
+     * @return string
+     */
+    private static function determineClassNameObject(string $model): string
+    {
+        if (substr($model, -6) === 'Object') {
+            return $model;
+        }
+
+        return $model . 'Object';
     }
 
     /**

@@ -5,6 +5,7 @@ use bunq\Model\Core\BunqModel;
 use bunq\Model\Generated\Endpoint\BunqMeTabApiObject;
 use bunq\Model\Generated\Endpoint\DraftPaymentApiObject;
 use bunq\Model\Generated\Endpoint\MasterCardActionApiObject;
+use bunq\Model\Generated\Endpoint\MonetaryAccountApiObject;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
 use bunq\Model\Generated\Endpoint\PaymentApiObject;
 use bunq\Model\Generated\Endpoint\PaymentBatchApiObject;
@@ -100,8 +101,8 @@ class NotificationUrlTest extends BunqSdkTestBase
     {
         $this->executeNotificationUrlTest(
             self::JSON_PATH_MONETARY_ACCOUNT_BANK_MODEL,
-            MonetaryAccountBankApiObject::class,
-            self::GETTER_MONETARY_ACCOUNT_BANK,
+            MonetaryAccountApiObject::class,
+            self::GETTER_MONETARY_ACCOUNT,
         );
     }
 

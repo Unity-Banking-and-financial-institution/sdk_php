@@ -220,7 +220,7 @@ class MonetaryAccountLightApiObject extends BunqModel
     /**
      * The profiles of the account.
      *
-     * @var MonetaryAccountProfileApiObject[]
+     * @var MonetaryAccountProfileApiObject
      */
     protected $monetaryAccountProfile;
 
@@ -265,6 +265,13 @@ class MonetaryAccountLightApiObject extends BunqModel
      * @var BirdeeInvestmentPortfolioApiObject
      */
     protected $birdeeInvestmentPortfolio;
+
+    /**
+     * The access of this Monetary Account.
+     *
+     * @var MonetaryAccountAccessApiObject[]
+     */
+    protected $allAccess;
 
     /**
      * The currency of the MonetaryAccountLight as an ISO 4217 formatted currency code.
@@ -894,7 +901,7 @@ class MonetaryAccountLightApiObject extends BunqModel
     /**
      * The profiles of the account.
      *
-     * @return MonetaryAccountProfileApiObject[]
+     * @return MonetaryAccountProfileApiObject
      */
     public function getMonetaryAccountProfile()
     {
@@ -904,7 +911,7 @@ class MonetaryAccountLightApiObject extends BunqModel
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param MonetaryAccountProfileApiObject[] $monetaryAccountProfile
+     * @param MonetaryAccountProfileApiObject $monetaryAccountProfile
      */
     public function setMonetaryAccountProfile($monetaryAccountProfile)
     {
@@ -1029,6 +1036,26 @@ class MonetaryAccountLightApiObject extends BunqModel
     public function setBirdeeInvestmentPortfolio($birdeeInvestmentPortfolio)
     {
         $this->birdeeInvestmentPortfolio = $birdeeInvestmentPortfolio;
+    }
+
+    /**
+     * The access of this Monetary Account.
+     *
+     * @return MonetaryAccountAccessApiObject[]
+     */
+    public function getAllAccess()
+    {
+        return $this->allAccess;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param MonetaryAccountAccessApiObject[] $allAccess
+     */
+    public function setAllAccess($allAccess)
+    {
+        $this->allAccess = $allAccess;
     }
 
     /**
@@ -1165,6 +1192,10 @@ class MonetaryAccountLightApiObject extends BunqModel
         }
 
         if (!is_null($this->birdeeInvestmentPortfolio)) {
+            return false;
+        }
+
+        if (!is_null($this->allAccess)) {
             return false;
         }
 

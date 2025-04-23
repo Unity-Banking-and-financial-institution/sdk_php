@@ -20,7 +20,7 @@ class DeviceServerInternal extends DeviceServerApiObject
      * @param string $description
      * @param string $secret
      * @param array|null $permittedIps
-     * @param array $customHeaders
+     * @param array $allCustomHeader
      * @param ApiContext|null $apiContext
      *
      * @return BunqResponseInt
@@ -30,7 +30,7 @@ class DeviceServerInternal extends DeviceServerApiObject
         string $description,
         string $secret,
         array $permittedIps = null,
-        array $customHeaders = [],
+        array $allCustomHeader = [],
         ApiContext $apiContext = null
     ): BunqResponseInt {
         if (is_null($apiContext)) {
@@ -48,7 +48,7 @@ class DeviceServerInternal extends DeviceServerApiObject
                 self::FIELD_SECRET => $secret,
                 self::FIELD_PERMITTED_IPS => $permittedIps,
             ],
-            $customHeaders
+            $allCustomHeader
         );
 
         return BunqResponseInt::castFromBunqResponse(

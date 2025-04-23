@@ -34,8 +34,8 @@ class BunqSdkTestBase extends TestCase
     /**
      * PointerObject constants.
      */
-    const PointerObject_TYPE_IBAN = 'IBAN';
-    const PointerObject_TYPE_EMAIL = 'EMAIL';
+    const POINTER_TYPE_IBAN = 'IBAN';
+    const POINTER_TYPE_EMAIL = 'EMAIL';
     const EMAIL_BRAVO = 'bravo@bunq.com';
 
     /**
@@ -137,14 +137,14 @@ class BunqSdkTestBase extends TestCase
     {
         RequestInquiryApiObject::create(
             new AmountObject(self::SPENDING_MONEY_AmountObject, self::MONETARY_ACCOUNT_CURRENCY),
-            new PointerObject(self::PointerObject_TYPE_EMAIL, self::SPENDING_MONEY_RECIPIENT),
+            new PointerObject(self::POINTER_TYPE_EMAIL, self::SPENDING_MONEY_RECIPIENT),
             self::SPENDING_MONEY_DESCRIPTION,
             false
         );
 
         RequestInquiryApiObject::create(
             new AmountObject(self::SPENDING_MONEY_AmountObject, self::MONETARY_ACCOUNT_CURRENCY),
-            new PointerObject(self::PointerObject_TYPE_EMAIL, self::SPENDING_MONEY_RECIPIENT),
+            new PointerObject(self::POINTER_TYPE_EMAIL, self::SPENDING_MONEY_RECIPIENT),
             self::SPENDING_MONEY_DESCRIPTION,
             false,
             $this->getSecondMonetaryAccountId()
@@ -161,7 +161,7 @@ class BunqSdkTestBase extends TestCase
         $allAlias = $this->secondMonetaryAccountBankEndpoint->getAlias();
 
         foreach ($allAlias as $alias) {
-            if ($alias->getType() === self::PointerObject_TYPE_IBAN) {
+            if ($alias->getType() === self::POINTER_TYPE_IBAN) {
                 return $alias;
             }
         }
@@ -202,10 +202,10 @@ class BunqSdkTestBase extends TestCase
     /**
      * @return PointerObject
      */
-    protected function getPointerObjectUserBravo(): PointerObject
+    protected function getPointerUserBravo(): PointerObject
     {
         return new PointerObject(
-            self::PointerObject_TYPE_EMAIL,
+            self::POINTER_TYPE_EMAIL,
             self::EMAIL_BRAVO
         );
     }

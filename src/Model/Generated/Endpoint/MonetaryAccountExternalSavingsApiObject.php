@@ -174,7 +174,7 @@ class MonetaryAccountExternalSavingsApiObject extends BunqModel
     /**
      * The profiles of the account.
      *
-     * @var MonetaryAccountProfileApiObject[]
+     * @var MonetaryAccountProfileApiObject
      */
     protected $monetaryAccountProfile;
 
@@ -261,6 +261,13 @@ class MonetaryAccountExternalSavingsApiObject extends BunqModel
      * @var BirdeeInvestmentPortfolioApiObject
      */
     protected $birdeeInvestmentPortfolio;
+
+    /**
+     * The access of this Monetary Account.
+     *
+     * @var MonetaryAccountAccessApiObject[]
+     */
+    protected $allAccess;
 
     /**
      * The currency of the MonetaryAccountExternalSavings as an ISO 4217 formatted currency code.
@@ -897,7 +904,7 @@ self::FIELD_SAVINGS_GOAL => $savingsGoal],
     /**
      * The profiles of the account.
      *
-     * @return MonetaryAccountProfileApiObject[]
+     * @return MonetaryAccountProfileApiObject
      */
     public function getMonetaryAccountProfile()
     {
@@ -907,7 +914,7 @@ self::FIELD_SAVINGS_GOAL => $savingsGoal],
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param MonetaryAccountProfileApiObject[] $monetaryAccountProfile
+     * @param MonetaryAccountProfileApiObject $monetaryAccountProfile
      */
     public function setMonetaryAccountProfile($monetaryAccountProfile)
     {
@@ -1155,6 +1162,26 @@ self::FIELD_SAVINGS_GOAL => $savingsGoal],
     }
 
     /**
+     * The access of this Monetary Account.
+     *
+     * @return MonetaryAccountAccessApiObject[]
+     */
+    public function getAllAccess()
+    {
+        return $this->allAccess;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param MonetaryAccountAccessApiObject[] $allAccess
+     */
+    public function setAllAccess($allAccess)
+    {
+        $this->allAccess = $allAccess;
+    }
+
+    /**
      * @return bool
      */
     public function isAllFieldNull()
@@ -1276,6 +1303,10 @@ self::FIELD_SAVINGS_GOAL => $savingsGoal],
         }
 
         if (!is_null($this->birdeeInvestmentPortfolio)) {
+            return false;
+        }
+
+        if (!is_null($this->allAccess)) {
             return false;
         }
 
