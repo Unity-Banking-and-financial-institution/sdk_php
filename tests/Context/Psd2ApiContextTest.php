@@ -20,11 +20,11 @@ class Psd2ApiContextTest extends TestCase
     /**
      * File constants.
      */
-    const FILE_TEST_CONFIGURATION = __DIR__ . '/PSD2/bunq-psd2-test.conf';
-    const FILE_TEST_OAUTH = __DIR__ . '/PSD2/bunq-oauth-test.conf';
-    const FILE_TEST_CERTIFICATE = __DIR__ . '/PSD2/certificate.cert';
-    const FILE_TEST_CERTIFICATE_CHAIN = __DIR__ . '/PSD2/certificate.cert';
-    const FILE_TEST_PRIVATE_KEY = __DIR__ . '/PSD2/private.pem';
+    const FILE_TEST_CONFIGURATION = __DIR__ . '/../Resource/bunq-psd2-test.conf';
+    const FILE_TEST_OAUTH = __DIR__ . '/../Resource/bunq-oauth-test.conf';
+    const FILE_TEST_CERTIFICATE = __DIR__ . '/../Resource/certificate.cert';
+    const FILE_TEST_CERTIFICATE_CHAIN = __DIR__ . '/../Resource/certificate.cert';
+    const FILE_TEST_PRIVATE_KEY = __DIR__ . '/../Resource/key.pem';
 
     const TEST_DEVICE_DESCRIPTION = 'PSD2TestDevice';
     

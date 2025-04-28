@@ -5,7 +5,6 @@ use bunq\Context\ApiContext;
 use bunq\Http\ApiClient;
 use bunq\Http\BunqResponse;
 use bunq\Model\Core\BunqModel;
-use bunq\Model\Generated\Object\PaymentBatchAnchoredPaymentObject;
 
 /**
  * Create a payment batch, or show the payment batches of a monetary account.
@@ -35,7 +34,7 @@ class PaymentBatchApiObject extends BunqModel
     /**
      * The list of mutations that were made.
      *
-     * @var PaymentBatchAnchoredPaymentObject
+     * @var PaymentApiObject[]
      */
     protected $payments;
 
@@ -164,7 +163,7 @@ class PaymentBatchApiObject extends BunqModel
     /**
      * The list of mutations that were made.
      *
-     * @return PaymentBatchAnchoredPaymentObject
+     * @return PaymentApiObject[]
      */
     public function getPayments()
     {
@@ -174,7 +173,7 @@ class PaymentBatchApiObject extends BunqModel
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param PaymentBatchAnchoredPaymentObject $payments
+     * @param PaymentApiObject[] $payments
      */
     public function setPayments($payments)
     {

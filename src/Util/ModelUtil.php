@@ -82,6 +82,11 @@ class ModelUtil
         }
     }
 
+    /**
+     * @param string $model
+     *
+     * @return string
+     */
     private static function determineClassNameModel(string $model): string
     {
         if (substr($model, -9) === 'ApiObject') {
@@ -92,11 +97,8 @@ class ModelUtil
     }
 
     /**
-     * Determines the correct class name for object format
-     * If the model name already ends with 'Object', return as is
-     * Otherwise, append 'Object' to the end
-     *
      * @param string $model
+     *
      * @return string
      */
     private static function determineClassNameObject(string $model): string
@@ -162,10 +164,10 @@ class ModelUtil
     }
 
     /**
-     * @param UserPersonApiObject $userPerson
-     * @param UserCompanyApiObject $userCompany
-     * @param UserApiKeyApiObject $userApiKey
-     * @param UserPaymentServiceProviderApiObject $userPaymentServiceProvider
+     * @param UserPersonApiObject|null $userPerson
+     * @param UserCompanyApiObject|null $userCompany
+     * @param UserApiKeyApiObject|null $userApiKey
+     * @param UserPaymentServiceProviderApiObject|null $userPaymentServiceProvider
      *
      * @return UserCompanyApiObject|UserPersonApiObject|UserApiKeyApiObject|UserPaymentServiceProviderApiObject
      * @throws BunqException

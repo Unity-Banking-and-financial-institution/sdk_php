@@ -57,6 +57,10 @@ example/result_attachment.jpg
 bunq-test.conf
 connectQr.png
 config.json
+tests/resource/certificate.cert
+tests/resource/key.pem
+tests/resource/bunq-oauth-test.conf
+tests/resource/bunq-psd2-test.conf
 
 # Composer
 composer.lock
@@ -68,7 +72,7 @@ tmp/
 .DS_STORE
 
 # PhpCs
-.php_cs*
+.php-cs-fixer.php
 
 # PHPUnit
 .phpunit.result.cache

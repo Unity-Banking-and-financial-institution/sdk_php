@@ -92,14 +92,6 @@ class Config
     /**
      * @return int
      */
-    public static function getCashRegisterId(): int
-    {
-        return static::getConfigFile()[self::FIELD_TAB_USAGE_SINGLE_TEST][self::FIELD_CASH_REGISTER_ID];
-    }
-
-    /**
-     * @return int
-     */
     public static function getMonetaryAccountId(): int
     {
         return static::getConfigFile()[self::FIELD_MONETARY_ACCOUNT_ID];

@@ -27,8 +27,7 @@ class CardDebitTest extends BunqSdkTestBase
     /**
      * Card type.
      */
-    const CARD_TYPE_MAESTRO = 'MASTERCARD';
-    const CARD_PRODUCT_TYPE_MASTERCARD_DEBIT = 'MASTERCARD_DEBIT';
+    const CARD_TYPE_MASTERCARD = 'MASTERCARD';
 
     /**
      * Product type.
@@ -72,8 +71,8 @@ class CardDebitTest extends BunqSdkTestBase
         $cardDebit = CardDebitApiObject::create(
             $this->generateCardDescription(),
             static::$nameOnCard[self::INDEX_FIRST],
-            self::CARD_TYPE_MAESTRO,
-            self::CARD_PRODUCT_TYPE_MASTERCARD_DEBIT,
+            self::CARD_TYPE_MASTERCARD,
+            self::PRODUCT_TYPE_MASTERCARD_DEBIT,
             $this->getUserAlias()->getName(),
             $this->getUserAlias(),
             [
