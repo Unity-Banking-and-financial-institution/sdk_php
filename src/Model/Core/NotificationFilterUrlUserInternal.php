@@ -13,13 +13,13 @@ class NotificationFilterUrlUserInternal extends NotificationFilterUrlApiObject
 {
     /**
      * @param NotificationFilterUrlObject[] $allNotificationFilter
-     * @param string[] $allCustomHeader
+     * @param string[] $allHeaderCustom
      *
      * @return BunqResponseNotificationFilterUrlApiObjectList
      */
     public static function createWithListResponse(
         array $allNotificationFilter = [],
-        array $allCustomHeader = []
+        array $allHeaderCustom = []
     ): BunqResponseNotificationFilterUrlApiObjectList {
         $apiClient = new ApiClient(static::getApiContext());
         $responseRaw = $apiClient->post(
@@ -28,7 +28,7 @@ class NotificationFilterUrlUserInternal extends NotificationFilterUrlApiObject
                 [static::determineUserId()]
             ),
             [self::FIELD_NOTIFICATION_FILTERS => $allNotificationFilter],
-            $allCustomHeader
+            $allHeaderCustom
         );
 
         return BunqResponseNotificationFilterUrlApiObjectList::castFromBunqResponse(

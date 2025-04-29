@@ -15,15 +15,15 @@ class NotificationFilterUrlMonetaryAccountInternal extends NotificationFilterUrl
      * Create notification filters
      *
      * @param int|null $monetaryAccountId
-     * @param NotificationFilterUrlObject[] $notificationFilters
-     * @param string[] $allCustomHeader
+     * @param NotificationFilterUrlObject[] $allNotificationFilter
+     * @param string[] $allHeaderCustom
      *
      * @return BunqResponseNotificationFilterUrlMonetaryAccountApiObjectList
      */
     public static function createWithListResponse(
         int $monetaryAccountId = null,
-        array $notificationFilters = [],
-        array $allCustomHeader = []
+        array $allNotificationFilter = [],
+        array $allHeaderCustom = []
     ): BunqResponseNotificationFilterUrlMonetaryAccountApiObjectList {
         $apiClient = new ApiClient(static::getApiContext());
         $responseRaw = $apiClient->post(
@@ -31,8 +31,8 @@ class NotificationFilterUrlMonetaryAccountInternal extends NotificationFilterUrl
                 self::ENDPOINT_URL_CREATE,
                 [static::determineUserId(), static::determineMonetaryAccountId($monetaryAccountId)]
             ),
-            [self::FIELD_NOTIFICATION_FILTERS => $notificationFilters],
-            $allCustomHeader
+            [self::FIELD_NOTIFICATION_FILTERS => $allNotificationFilter],
+            $allHeaderCustom
         );
 
         return BunqResponseNotificationFilterUrlMonetaryAccountApiObjectList::castFromBunqResponse(

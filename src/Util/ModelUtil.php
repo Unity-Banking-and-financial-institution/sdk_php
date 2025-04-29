@@ -28,6 +28,12 @@ class ModelUtil
     const FORMAT_QUALIFIED_OVERRIDE_TYPE = 'bunq\\Model\\Core\\%s';
 
     /**
+     * Model suffixes.
+     */
+    const MODEL_SUFFIX_OBJECT = 'Object';
+    const MODEL_SUFFIX_API_OBJECT = 'ApiObject';
+
+    /**
      * Error constants.
      */
     const ERROR_MODEL_NOT_DEFINED = 'Found model "%s" which is not defined.';
@@ -89,11 +95,11 @@ class ModelUtil
      */
     private static function determineClassNameModel(string $model): string
     {
-        if (substr($model, -9) === 'ApiObject') {
+        if (substr($model, -9) === self::MODEL_SUFFIX_API_OBJECT) {
             return $model;
         }
 
-        return $model . 'ApiObject';
+        return $model . self::MODEL_SUFFIX_API_OBJECT;
     }
 
     /**
@@ -103,11 +109,11 @@ class ModelUtil
      */
     private static function determineClassNameObject(string $model): string
     {
-        if (substr($model, -6) === 'Object') {
+        if (substr($model, -6) === self::MODEL_SUFFIX_OBJECT) {
             return $model;
         }
 
-        return $model . 'Object';
+        return $model . self::MODEL_SUFFIX_OBJECT;
     }
 
     /**

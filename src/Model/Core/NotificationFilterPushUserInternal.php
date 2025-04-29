@@ -15,12 +15,12 @@ class NotificationFilterPushUserInternal extends NotificationFilterPushApiObject
      * Create notification filters
      *
      * @param NotificationFilterPushObject[] $allNotificationFilter
-     * @param string[] $allCustomHeader
+     * @param string[] $allHeaderCustom
      * @return BunqResponseNotificationFilterPushApiObjectList
      */
     public static function createWithListResponse(
         array $allNotificationFilter = [],
-        array $allCustomHeader = []
+        array $allHeaderCustom = []
     ): BunqResponseNotificationFilterPushApiObjectList {
         $apiClient = new ApiClient(static::getApiContext());
         $responseRaw = $apiClient->post(
@@ -29,7 +29,7 @@ class NotificationFilterPushUserInternal extends NotificationFilterPushApiObject
                 [static::determineUserId()]
             ),
             [self::FIELD_NOTIFICATION_FILTERS => $allNotificationFilter],
-            $allCustomHeader
+            $allHeaderCustom
         );
 
         return BunqResponseNotificationFilterPushApiObjectList::castFromBunqResponse(
