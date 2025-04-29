@@ -1,31 +1,11 @@
-### PhpStorm ###
-# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-
-# User-specific stuff:
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/dictionaries
-.idea/php.xml
-.idea/shelf
-
-# Sensitive or high-churn files:
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.xml
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-
-# Gradle:
-.idea/**/gradle.xml
-.idea/**/libraries
+# Cache files
+cache/
 
 # CMake
 cmake-build-debug/
 
-# Mongo Explorer plugin:
-.idea/**/mongoSettings.xml
+# IDE files
+.idea
 
 ## File-based project format:
 *.iws
@@ -34,9 +14,6 @@ cmake-build-debug/
 
 # IntelliJ
 /out/
-
-# mpeltonen/sbt-idea plugin
-.idea_modules/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
@@ -58,9 +35,6 @@ modules.xml
 .idea/misc.xml
 *.ipr
 
-# Sonarlint plugin
-.idea/sonarlint
-
 # End of https://www.gitignore.io/api/phpstorm
 
 # bunq context file
@@ -70,6 +44,10 @@ example/result_attachment.jpg
 bunq-test.conf
 connectQr.png
 config.json
+tests/resource/certificate.cert
+tests/resource/key.pem
+tests/resource/bunq-oauth-test.conf
+tests/resource/bunq-psd2-test.conf
 
 # Composer
 composer.lock
@@ -81,7 +59,7 @@ tmp/
 .DS_STORE
 
 # PhpCs
-.php_cs*
+.php-cs-fixer*
 
 # PHPUnit
 .phpunit.result.cache

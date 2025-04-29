@@ -1,11 +1,8 @@
 <?php
 namespace bunq\test\Http;
 
-use bunq\Exception\BadRequestException;
 use bunq\Exception\NotFoundException;
-use bunq\Model\Generated\Endpoint\MonetaryAccount;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Endpoint\UserPerson;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -25,7 +22,7 @@ class ErrorResponseIdTest extends BunqSdkTestBase
         $caughtException = null;
 
         try {
-            MonetaryAccountBank::get(self::INVALID_USER_PERSON_ID);
+            MonetaryAccountBankApiObject::get(self::INVALID_USER_PERSON_ID);
         } catch (NotFoundException $exception) {
             $caughtException = $exception;
         }

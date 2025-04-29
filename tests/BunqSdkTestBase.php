@@ -4,16 +4,11 @@ namespace bunq\test;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
 use bunq\Exception\BunqException;
-use bunq\Http\ApiClient;
-use bunq\Model\Generated\Endpoint\AttachmentPublic;
-use bunq\Model\Generated\Endpoint\Avatar;
-use bunq\Model\Generated\Endpoint\CashRegister;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Endpoint\RequestInquiry;
-use bunq\Model\Generated\Object\Amount;
-use bunq\Model\Generated\Object\Pointer;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
+use bunq\Model\Generated\Endpoint\RequestInquiryApiObject;
+use bunq\Model\Generated\Object\AmountObject;
+use bunq\Model\Generated\Object\PointerObject;
 use bunq\Util\BunqEnumApiEnvironmentType;
-use bunq\Util\FileUtil;
 use bunq\Util\InstallationUtil;
 use PHPUnit\Framework\TestCase;
 
@@ -25,15 +20,9 @@ class BunqSdkTestBase extends TestCase
     /**
      * Error constants.
      */
-    const ERROR_COULD_NOT_DETERMINE_IBAN_POINTER = 'Could not determine IBAN pointer';
+    const ERROR_COULD_NOT_DETERMINE_IBAN = 'Could not determine IBAN Pointer';
     const ERROR_COULD_NOT_DETERMINE_USER_ALIAS = 'Could not determine user alias.';
-    const WARMING_TEST_SKIPPED_DUE_TO_INSUFFICIENT_BALANCE = 'Not enough money on primary account.';
-
-    /*
-     * CashRegister constants.
-     */
-    const CASH_REGISTER_NAME = 'PHP test cash register';
-    const CASH_REGISTER_STATUS = 'PENDING_APPROVAL';
+    const WARNING_TEST_SKIPPED_DUE_TO_INSUFFICIENT_BALANCE = 'Not enough money on primary account.';
 
     /**
      * MonetaryAccount constants.
@@ -73,14 +62,9 @@ class BunqSdkTestBase extends TestCase
     const INDEX_FIRST = 0;
 
     /**
-     * @var MonetaryAccountBank
+     * @var MonetaryAccountBankApiObject
      */
     protected $secondMonetaryAccountBank;
-
-    /**
-     * @var CashRegister
-     */
-    protected $cashRegister;
 
     /**
      * Spending money constants.
@@ -115,29 +99,8 @@ class BunqSdkTestBase extends TestCase
     {
         $this->setSecondMonetaryAccountBank();
         $this->requestSpendingMoney();
-        sleep(0.5); // ensure requests are auto accepted.
+        sleep(1); // ensure requests are auto accepted.
         BunqContext::getUserContext()->refreshUserContext();
-    }
-
-    /**
-     */
-    private function setCashRegister()
-    {
-        $attachmentUuid = AttachmentPublic::create(
-            FileUtil::getFileContents(__DIR__ . self::FILE_PATH_AVATAR),
-            [
-                ApiClient::HEADER_CONTENT_TYPE => $this->getAttachmentContentType(),
-                ApiClient::HEADER_ATTACHMENT_DESCRIPTION => $this->getAttachmentDescription(),
-            ]
-        );
-        $avatarUuid = Avatar::create($attachmentUuid->getValue());
-        $cashRegisterId = CashRegister::create(
-            self::CASH_REGISTER_NAME,
-            self::CASH_REGISTER_STATUS,
-            $avatarUuid->getValue()
-        );
-
-        $this->cashRegister = CashRegister::get($cashRegisterId->getValue());
     }
 
     /**
@@ -160,28 +123,28 @@ class BunqSdkTestBase extends TestCase
      */
     private function setSecondMonetaryAccountBank()
     {
-        $createdId = MonetaryAccountBank::create(
+        $createdId = MonetaryAccountBankApiObject::create(
             self::MONETARY_ACCOUNT_CURRENCY,
             self::MONETARY_ACCOUNT_DESCRIPTION
         );
 
-        $this->secondMonetaryAccountBank = MonetaryAccountBank::get($createdId->getValue())->getValue();
+        $this->secondMonetaryAccountBank = MonetaryAccountBankApiObject::get($createdId->getValue())->getValue();
     }
 
     /**
      */
     private function requestSpendingMoney()
     {
-        RequestInquiry::create(
-            new Amount(self::SPENDING_MONEY_AMOUNT, self::MONETARY_ACCOUNT_CURRENCY),
-            new Pointer(self::POINTER_TYPE_EMAIL, self::SPENDING_MONEY_RECIPIENT),
+        RequestInquiryApiObject::create(
+            new AmountObject(self::SPENDING_MONEY_AMOUNT, self::MONETARY_ACCOUNT_CURRENCY),
+            new PointerObject(self::POINTER_TYPE_EMAIL, self::SPENDING_MONEY_RECIPIENT),
             self::SPENDING_MONEY_DESCRIPTION,
             false
         );
 
-        RequestInquiry::create(
-            new Amount(self::SPENDING_MONEY_AMOUNT, self::MONETARY_ACCOUNT_CURRENCY),
-            new Pointer(self::POINTER_TYPE_EMAIL, self::SPENDING_MONEY_RECIPIENT),
+        RequestInquiryApiObject::create(
+            new AmountObject(self::SPENDING_MONEY_AMOUNT, self::MONETARY_ACCOUNT_CURRENCY),
+            new PointerObject(self::POINTER_TYPE_EMAIL, self::SPENDING_MONEY_RECIPIENT),
             self::SPENDING_MONEY_DESCRIPTION,
             false,
             $this->getSecondMonetaryAccountId()
@@ -189,11 +152,11 @@ class BunqSdkTestBase extends TestCase
     }
 
     /**
-     * @return Pointer
+     * @return PointerObject
      *
      * @throws BunqException
      */
-    protected function getSecondMonetaryAccountAlias(): Pointer
+    protected function getSecondMonetaryAccountAlias(): PointerObject
     {
         $allAlias = $this->secondMonetaryAccountBank->getAlias();
 
@@ -203,7 +166,7 @@ class BunqSdkTestBase extends TestCase
             }
         }
 
-        throw new BunqException(self::ERROR_COULD_NOT_DETERMINE_IBAN_POINTER);
+        throw new BunqException(self::ERROR_COULD_NOT_DETERMINE_IBAN);
     }
 
     /**
@@ -215,11 +178,11 @@ class BunqSdkTestBase extends TestCase
     }
 
     /**
-     * @return Pointer
+     * @return PointerObject
      *
      * @throws BunqException
      */
-    protected function getUserAlias(): Pointer
+    protected function getUserAlias(): PointerObject
     {
         if (BunqContext::getUserContext()->isOnlyUserPersonSet()) {
             return BunqContext::getUserContext()->getUserPerson()->getAlias()[self::INDEX_FIRST];
@@ -237,11 +200,11 @@ class BunqSdkTestBase extends TestCase
     }
 
     /**
-     * @return Pointer
+     * @return PointerObject
      */
-    protected function getPointerUserBravo(): Pointer
+    protected function getPointerUserBravo(): PointerObject
     {
-        return new Pointer(
+        return new PointerObject(
             self::POINTER_TYPE_EMAIL,
             self::EMAIL_BRAVO
         );
@@ -253,18 +216,6 @@ class BunqSdkTestBase extends TestCase
     protected function getSecondMonetaryAccountId(): int
     {
         return $this->secondMonetaryAccountBank->getId();
-    }
-
-    /**
-     * @return int
-     */
-    protected function getCashRegisterId(): int
-    {
-        if (is_null($this->cashRegister)) {
-            $this->setCashRegister();
-        }
-
-        return $this->cashRegister->getId();
     }
 
     /**
@@ -283,7 +234,7 @@ class BunqSdkTestBase extends TestCase
     protected function skipTestIfNeededDueToInsufficientBalance(): bool
     {
         if (!$this->isMonetaryAccountBalanceSufficient()) {
-            static::markTestSkipped(self::WARMING_TEST_SKIPPED_DUE_TO_INSUFFICIENT_BALANCE);
+            static::markTestSkipped(self::WARNING_TEST_SKIPPED_DUE_TO_INSUFFICIENT_BALANCE);
         }
 
         return true;

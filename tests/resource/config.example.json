@@ -8,9 +8,6 @@
         "DESCRIPTION": "TEST PNG PHP",
         "PATH_IN": "/vader.png"
     },
-    "TabUsageSingleTest": {
-        "CASH_REGISTER_ID": "xxx"
-    },
     "CounterPartySelf": {
         "Alias": "<Email address>",
         "Type": "EMAIL"

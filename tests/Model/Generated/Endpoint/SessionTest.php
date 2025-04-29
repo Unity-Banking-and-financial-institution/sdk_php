@@ -2,7 +2,7 @@
 namespace bunq\test\Model\Generated\Endpoint;
 
 use bunq\Context\BunqContext;
-use bunq\Model\Generated\Endpoint\Session;
+use bunq\Model\Generated\Endpoint\SessionApiObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -41,6 +41,6 @@ class SessionTest extends BunqSdkTestBase
      */
     public function testDeleteSession()
     {
-        static::assertNull(Session::delete(self::SESSION_ID_DUMMY)->getValue());
+        static::assertNull(SessionApiObject::delete(self::SESSION_ID_DUMMY)->getValue());
     }
 }

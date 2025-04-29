@@ -1,9 +1,9 @@
 <?php
 namespace bunq\test\Model\Generated\Endpoint;
 
-use bunq\Model\Generated\Endpoint\RequestInquiry;
-use bunq\Model\Generated\Endpoint\RequestResponse;
-use bunq\Model\Generated\Object\Amount;
+use bunq\Model\Generated\Endpoint\RequestInquiryApiObject;
+use bunq\Model\Generated\Endpoint\RequestResponseApiObject;
+use bunq\Model\Generated\Object\AmountObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -43,7 +43,7 @@ class RequestInquiryTest extends BunqSdkTestBase
         $this->skipTestIfNeededDueToInsufficientBalance();
 
         $this->sendRequest();
-        $responses = RequestResponse::listing($this->getSecondMonetaryAccountId())->getValue();
+        $responses = RequestResponseApiObject::listing($this->getSecondMonetaryAccountId())->getValue();
 
         static::assertNotNull($responses);
 
@@ -55,8 +55,8 @@ class RequestInquiryTest extends BunqSdkTestBase
      */
     private function sendRequest()
     {
-        $response = RequestInquiry::create(
-            new Amount(self::REQUEST_AMOUNT_IN_EUR, self::REQUEST_CURRENCY),
+        $response = RequestInquiryApiObject::create(
+            new AmountObject(self::REQUEST_AMOUNT_IN_EUR, self::REQUEST_CURRENCY),
             $this->getSecondMonetaryAccountAlias(),
             self::REQUEST_DESCRIPTION,
             false
@@ -70,7 +70,7 @@ class RequestInquiryTest extends BunqSdkTestBase
      */
     private function acceptRequest(int $requestResponseId)
     {
-        $response = RequestResponse::update(
+        $response = RequestResponseApiObject::update(
             $requestResponseId,
             $this->getSecondMonetaryAccountId(),
             null,

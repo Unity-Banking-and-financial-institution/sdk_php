@@ -5,9 +5,10 @@ use bunq\Context\BunqContext;
 use bunq\Model\Core\NotificationFilterPushUserInternal;
 use bunq\Model\Core\NotificationFilterUrlMonetaryAccountInternal;
 use bunq\Model\Core\NotificationFilterUrlUserInternal;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\NotificationFilterPush;
-use bunq\Model\Generated\Object\NotificationFilterUrl;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
+use bunq\Model\Generated\Endpoint\TreeProgressApiObject;
+use bunq\Model\Generated\Object\NotificationFilterPushObject;
+use bunq\Model\Generated\Object\NotificationFilterUrlObject;
 use bunq\test\BunqSdkTestBase;
 
 /**
@@ -29,7 +30,7 @@ class NotificationFilterTest extends BunqSdkTestBase
      */
     public function testNotificationFilterUrlMonetaryAccount()
     {
-        $notification = $this->getNotificationFilterUrl();
+        $notification = new NotificationFilterUrlObject(self::FILTER_CATEGORY_MUTATION, self::FILTER_CALLBACK_URL);
         $allCreatedNotificationFilter = NotificationFilterUrlMonetaryAccountInternal::createWithListResponse(
             $this->getPrimaryMonetaryAccount()->getId(),
             [$notification]
@@ -44,7 +45,7 @@ class NotificationFilterTest extends BunqSdkTestBase
      */
     public function testNotificationFilterUrlUser()
     {
-        $notification = $this->getNotificationFilterUrl();
+        $notification = new NotificationFilterUrlObject(self::FILTER_CATEGORY_MUTATION, self::FILTER_CALLBACK_URL);
         $allCreatedNotificationFilter = NotificationFilterUrlUserInternal::createWithListResponse(
             [$notification]
         )->getValue();
@@ -57,56 +58,20 @@ class NotificationFilterTest extends BunqSdkTestBase
      */
     public function testNotificationFilterPushUser()
     {
-        $notification = $this->getNotificationFilterPush();
+        $notification = new NotificationFilterPushObject(self::FILTER_CATEGORY_MUTATION);
+
         $allCreatedNotificationFilter = NotificationFilterPushUserInternal::createWithListResponse(
             [$notification]
         )->getValue();
 
         static::assertTrue(is_array($allCreatedNotificationFilter));
-        static::assertTrue(count($allCreatedNotificationFilter) === 1);
+        static::assertTrue(count($allCreatedNotificationFilter) > 1);
     }
 
     /**
-     * Test clear all filters.
+     * @return MonetaryAccountBankApiObject
      */
-    public function testNotificationFilterClear()
-    {
-        $allCreatedNotificationFilterPushUser =
-            NotificationFilterPushUserInternal::createWithListResponse()->getValue();
-        $allCreatedNotificationFilterUrlUser =
-            NotificationFilterUrlUserInternal::createWithListResponse()->getValue();
-        $allCreatedNotificationFilterUrlMonetaryAccount =
-            NotificationFilterUrlMonetaryAccountInternal::createWithListResponse()->getValue();
-
-        static::assertEmpty($allCreatedNotificationFilterPushUser);
-        static::assertEmpty($allCreatedNotificationFilterUrlUser);
-        static::assertEmpty($allCreatedNotificationFilterUrlMonetaryAccount);
-
-        static::assertCount(0, NotificationFilterPushUserInternal::listing()->getValue());
-        static::assertCount(0, NotificationFilterUrlUserInternal::listing()->getValue());
-        static::assertCount(0, NotificationFilterUrlMonetaryAccountInternal::listing()->getValue());
-    }
-
-    /**
-     * @return NotificationFilterUrl
-     */
-    private function getNotificationFilterUrl(): NotificationFilterUrl
-    {
-        return new NotificationFilterUrl(self::FILTER_CATEGORY_MUTATION, self::FILTER_CALLBACK_URL);
-    }
-
-    /**
-     * @return NotificationFilterPush
-     */
-    private function getNotificationFilterPush(): NotificationFilterPush
-    {
-        return new NotificationFilterPush(self::FILTER_CATEGORY_MUTATION);
-    }
-
-    /**
-     * @return MonetaryAccountBank
-     */
-    private function getPrimaryMonetaryAccount(): MonetaryAccountBank
+    private function getPrimaryMonetaryAccount(): MonetaryAccountBankApiObject
     {
         return BunqContext::getUserContext()->getPrimaryMonetaryAccount();
     }

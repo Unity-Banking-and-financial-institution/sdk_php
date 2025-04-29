@@ -8,8 +8,8 @@ use bunq\Model\Core\Installation;
 use bunq\Model\Generated\Endpoint\BunqResponseInt;
 use bunq\Model\Generated\Endpoint\BunqResponseString;
 use bunq\Model\Generated\Endpoint\BunqResponseUserCompany;
-use bunq\Model\Generated\Endpoint\UserCompany;
-use bunq\Model\Generated\Object\Amount;
+use bunq\Model\Generated\Endpoint\UserCompanyApiObject;
+use bunq\Model\Generated\Object\AmountObject;
 use bunq\Util\FileUtil;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -105,16 +105,16 @@ class JsonParserTest extends TestCase
         $userCompanyJson = FileUtil::getFileContents(__DIR__ . self::RESOURCE_USER_COMPANY_JSON);
         /** @var BunqResponseUserCompany $bunqResponseUserCompany */
         $bunqResponseUserCompany = $this->callPrivateStaticMethod(
-            UserCompany::class,
+            UserCompanyApiObject::class,
             self::FUNCTION_FROM_JSON,
-            [new BunqResponseRaw($userCompanyJson, []), UserCompany::OBJECT_TYPE_GET]
+            [new BunqResponseRaw($userCompanyJson, []), UserCompanyApiObject::OBJECT_TYPE_GET]
         );
         $userCompany = $bunqResponseUserCompany->getValue();
 
-        static::assertInstanceOf(UserCompany::class, $userCompany);
+        static::assertInstanceOf(UserCompanyApiObject::class, $userCompany);
         static::assertEquals(self::EXPECTED_NAME_BUNQ, $userCompany->getName());
         static::assertEquals(self::EXPECTED_EMAIL_BRAVO, $userCompany->getAlias()[0]->getValue());
-        static::assertInstanceOf(Amount::class, $userCompany->getDailyLimitWithoutConfirmationLogin());
+        static::assertInstanceOf(AmountObject::class, $userCompany->getDailyLimitWithoutConfirmationLogin());
     }
 
     /**
