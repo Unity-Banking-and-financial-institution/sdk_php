@@ -23,7 +23,7 @@ class AvatarTest extends BunqSdkTestBase
     /**
      *  Points to the directory where attachments are stored.
      */
-    const PATH_ATTACHMENT = '/../../../Resource/';
+    const PATH_ATTACHMENT = '/../../../resource/';
 
     /**
      * Tests the creation of a new avatar.
