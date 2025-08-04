@@ -35,6 +35,7 @@ class DraftPaymentApiObject extends BunqModel
     const FIELD_PREVIOUS_UPDATED_TIMESTAMP = 'previous_updated_timestamp';
     const FIELD_NUMBER_OF_REQUIRED_ACCEPTS = 'number_of_required_accepts';
     const FIELD_SCHEDULE = 'schedule';
+    const FIELD_PAYMENT_BATCH_EXECUTION_TYPE = 'payment_batch_execution_type';
 
     /**
      * Object type.
@@ -112,6 +113,13 @@ class DraftPaymentApiObject extends BunqModel
     protected $schedule;
 
     /**
+     * The execution type that will be used when converting this draft payment to a payment batch.
+     *
+     * @var string|null
+     */
+    protected $paymentBatchExecutionType;
+
+    /**
      * The status of the DraftPayment.
      *
      * @var string|null
@@ -148,6 +156,13 @@ class DraftPaymentApiObject extends BunqModel
     protected $scheduleFieldForRequest;
 
     /**
+     * The execution type that will be used when converting this draft payment to a payment batch.
+     *
+     * @var string|null
+     */
+    protected $paymentBatchExecutionTypeFieldForRequest;
+
+    /**
      * @param DraftPaymentEntryObject[] $entries The list of entries in the DraftPayment. Each entry will result in a payment
      * when the DraftPayment is accepted.
      * @param int $numberOfRequiredAccepts The number of accepts that are required for the draft payment to receive status
@@ -156,14 +171,17 @@ class DraftPaymentApiObject extends BunqModel
      * @param string|null $previousUpdatedTimestamp The last updated_timestamp that you received for this DraftPayment. This
      * needs to be provided to prevent race conditions.
      * @param ScheduleApiObject|null $schedule The schedule details when creating or updating a scheduled payment.
+     * @param string|null $paymentBatchExecutionType The execution type that will be used when converting this draft payment to
+     * a payment batch.
      */
-    public function __construct(array  $entries, int  $numberOfRequiredAccepts, string  $status = null, string  $previousUpdatedTimestamp = null, ScheduleApiObject  $schedule = null)
+    public function __construct(array  $entries, int  $numberOfRequiredAccepts, string  $status = null, string  $previousUpdatedTimestamp = null, ScheduleApiObject  $schedule = null, string  $paymentBatchExecutionType = null)
     {
         $this->statusFieldForRequest = $status;
         $this->entriesFieldForRequest = $entries;
         $this->previousUpdatedTimestampFieldForRequest = $previousUpdatedTimestamp;
         $this->numberOfRequiredAcceptsFieldForRequest = $numberOfRequiredAccepts;
         $this->scheduleFieldForRequest = $schedule;
+        $this->paymentBatchExecutionTypeFieldForRequest = $paymentBatchExecutionType;
     }
 
     /**
@@ -178,11 +196,13 @@ class DraftPaymentApiObject extends BunqModel
      * @param string|null $previousUpdatedTimestamp The last updated_timestamp that you received for this DraftPayment. This
      * needs to be provided to prevent race conditions.
      * @param ScheduleApiObject|null $schedule The schedule details when creating or updating a scheduled payment.
+     * @param string|null $paymentBatchExecutionType The execution type that will be used when converting this draft payment to
+     * a payment batch.
      * @param string[] $customHeaders
      *
      * @return BunqResponseInt
      */
-    public static function create(array  $entries, int  $numberOfRequiredAccepts, int $monetaryAccountId = null, string  $status = null, string  $previousUpdatedTimestamp = null, ScheduleApiObject  $schedule = null, array $customHeaders = []): BunqResponseInt
+    public static function create(array  $entries, int  $numberOfRequiredAccepts, int $monetaryAccountId = null, string  $status = null, string  $previousUpdatedTimestamp = null, ScheduleApiObject  $schedule = null, string  $paymentBatchExecutionType = null, array $customHeaders = []): BunqResponseInt
     {
         $apiClient = new ApiClient(static::getApiContext());
         $responseRaw = $apiClient->post(
@@ -194,7 +214,8 @@ class DraftPaymentApiObject extends BunqModel
 self::FIELD_ENTRIES => $entries,
 self::FIELD_PREVIOUS_UPDATED_TIMESTAMP => $previousUpdatedTimestamp,
 self::FIELD_NUMBER_OF_REQUIRED_ACCEPTS => $numberOfRequiredAccepts,
-self::FIELD_SCHEDULE => $schedule],
+self::FIELD_SCHEDULE => $schedule,
+self::FIELD_PAYMENT_BATCH_EXECUTION_TYPE => $paymentBatchExecutionType],
             $customHeaders
         );
 
@@ -212,11 +233,13 @@ self::FIELD_SCHEDULE => $schedule],
      * @param string|null $previousUpdatedTimestamp The last updated_timestamp that you received for this DraftPayment. This
      * needs to be provided to prevent race conditions.
      * @param ScheduleApiObject|null $schedule The schedule details when creating or updating a scheduled payment.
+     * @param string|null $paymentBatchExecutionType The execution type that will be used when converting this draft payment to
+     * a payment batch.
      * @param string[] $customHeaders
      *
      * @return BunqResponseInt
      */
-    public static function update(int $draftPaymentId, int $monetaryAccountId = null, string  $status = null, string  $previousUpdatedTimestamp = null, ScheduleApiObject  $schedule = null, array $customHeaders = []): BunqResponseInt
+    public static function update(int $draftPaymentId, int $monetaryAccountId = null, string  $status = null, string  $previousUpdatedTimestamp = null, ScheduleApiObject  $schedule = null, string  $paymentBatchExecutionType = null, array $customHeaders = []): BunqResponseInt
     {
         $apiClient = new ApiClient(static::getApiContext());
         $responseRaw = $apiClient->put(
@@ -226,7 +249,8 @@ self::FIELD_SCHEDULE => $schedule],
             ),
             [self::FIELD_STATUS => $status,
 self::FIELD_PREVIOUS_UPDATED_TIMESTAMP => $previousUpdatedTimestamp,
-self::FIELD_SCHEDULE => $schedule],
+self::FIELD_SCHEDULE => $schedule,
+self::FIELD_PAYMENT_BATCH_EXECUTION_TYPE => $paymentBatchExecutionType],
             $customHeaders
         );
 
@@ -491,6 +515,26 @@ self::FIELD_SCHEDULE => $schedule],
     }
 
     /**
+     * The execution type that will be used when converting this draft payment to a payment batch.
+     *
+     * @return string
+     */
+    public function getPaymentBatchExecutionType()
+    {
+        return $this->paymentBatchExecutionType;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param string $paymentBatchExecutionType
+     */
+    public function setPaymentBatchExecutionType($paymentBatchExecutionType)
+    {
+        $this->paymentBatchExecutionType = $paymentBatchExecutionType;
+    }
+
+    /**
      * @return bool
      */
     public function isAllFieldNull()
@@ -532,6 +576,10 @@ self::FIELD_SCHEDULE => $schedule],
         }
 
         if (!is_null($this->schedule)) {
+            return false;
+        }
+
+        if (!is_null($this->paymentBatchExecutionType)) {
             return false;
         }
 

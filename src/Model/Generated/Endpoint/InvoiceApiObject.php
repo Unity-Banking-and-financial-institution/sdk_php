@@ -21,8 +21,8 @@ class InvoiceApiObject extends BunqModel
     /**
      * Endpoint constants.
      */
-    const ENDPOINT_URL_LISTING = 'user/%s/monetary-account/%s/invoice';
     const ENDPOINT_URL_READ = 'user/%s/monetary-account/%s/invoice/%s';
+    const ENDPOINT_URL_LISTING = 'user/%s/monetary-account/%s/invoice';
 
     /**
      * Field constants.
@@ -196,6 +196,30 @@ class InvoiceApiObject extends BunqModel
     }
 
     /**
+     * @param int $invoiceId
+     * @param int|null $monetaryAccountId
+     * @param string[] $customHeaders
+     *
+     * @return BunqResponseInvoice
+     */
+    public static function get(int $invoiceId, int $monetaryAccountId = null, array $customHeaders = []): BunqResponseInvoice
+    {
+        $apiClient = new ApiClient(static::getApiContext());
+        $responseRaw = $apiClient->get(
+            vsprintf(
+                self::ENDPOINT_URL_READ,
+                [static::determineUserId(), static::determineMonetaryAccountId($monetaryAccountId), $invoiceId]
+            ),
+            [],
+            $customHeaders
+        );
+
+        return BunqResponseInvoice::castFromBunqResponse(
+            static::fromJson($responseRaw, self::OBJECT_TYPE_GET)
+        );
+    }
+
+    /**
      * This method is called "listing" because "list" is a restricted PHP word and cannot be used as constants, class names,
      * function or method names.
      *
@@ -219,30 +243,6 @@ class InvoiceApiObject extends BunqModel
 
         return BunqResponseInvoiceApiObjectList::castFromBunqResponse(
             static::fromJsonList($responseRaw, self::OBJECT_TYPE_GET)
-        );
-    }
-
-    /**
-     * @param int $invoiceId
-     * @param int|null $monetaryAccountId
-     * @param string[] $customHeaders
-     *
-     * @return BunqResponseInvoice
-     */
-    public static function get(int $invoiceId, int $monetaryAccountId = null, array $customHeaders = []): BunqResponseInvoice
-    {
-        $apiClient = new ApiClient(static::getApiContext());
-        $responseRaw = $apiClient->get(
-            vsprintf(
-                self::ENDPOINT_URL_READ,
-                [static::determineUserId(), static::determineMonetaryAccountId($monetaryAccountId), $invoiceId]
-            ),
-            [],
-            $customHeaders
-        );
-
-        return BunqResponseInvoice::castFromBunqResponse(
-            static::fromJson($responseRaw, self::OBJECT_TYPE_GET)
         );
     }
 

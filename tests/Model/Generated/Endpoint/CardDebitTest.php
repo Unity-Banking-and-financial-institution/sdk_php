@@ -69,18 +69,18 @@ class CardDebitTest extends BunqSdkTestBase
     public function testOrderingDebitCard()
     {
         $cardDebit = CardDebitApiObject::create(
-            $this->generateCardDescription(),
-            static::$nameOnCard[self::INDEX_FIRST],
-            self::CARD_TYPE_MASTERCARD,
-            self::PRODUCT_TYPE_MASTERCARD_DEBIT,
-            $this->getUserAlias()->getName(),
-            $this->getUserAlias(),
-            [
+            secondLine: $this->generateCardDescription(),
+            nameOnCard: static::$nameOnCard[self::INDEX_FIRST],
+            type: self::CARD_TYPE_MASTERCARD,
+            productType: self::PRODUCT_TYPE_MASTERCARD_DEBIT,
+            preferredNameOnCard: $this->getUserAlias()->getName(),
+            alias: $this->getUserAlias(),
+            pincodeAssignment: [
                 new CardPinAssignmentObject(
-                    self::CARD_PIN_CODE_ASSIGNMENT,
-                    self::CARD_ROUTING_TYPE,
-                    self::CARD_PIN_CODE,
-                    BunqContext::getUserContext()->getPrimaryMonetaryAccount()->getId()
+                    type: self::CARD_PIN_CODE_ASSIGNMENT,
+                    routingType: self::CARD_ROUTING_TYPE,
+                    pinCode: self::CARD_PIN_CODE,
+                    monetaryAccountId: BunqContext::getUserContext()->getPrimaryMonetaryAccount()->getId()
                 ),
             ],
         )->getValue();

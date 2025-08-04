@@ -24,8 +24,8 @@ class BunqMeTabEntryTest extends BunqSdkTestBase
     {
         $response = BunqMeTabApiObject::create(
             new BunqMeTabEntryApiObject(
-                new AmountObject(self::PAYMENT_AMOUNT_DEFAULT, self::MONETARY_ACCOUNT_CURRENCY),
-                self::ENTRY_DESCRIPTION
+                amountInquired: new AmountObject(self::PAYMENT_AMOUNT_DEFAULT, self::MONETARY_ACCOUNT_CURRENCY),
+                description: self::ENTRY_DESCRIPTION
             )
         );
 

@@ -42,9 +42,9 @@ class PaymentTest extends BunqSdkTestBase
         $this->skipTestIfNeededDueToInsufficientBalance();
 
         $response = PaymentApiObject::create(
-            new AmountObject(self::PAYMENT_AMOUNT_IN_EUR, self::PAYMENT_CURRENCY),
-            $this->getPointerUserBravo(),
-            self::PAYMENT_DESCRIPTION
+            amount: new AmountObject(self::PAYMENT_AMOUNT_IN_EUR, self::PAYMENT_CURRENCY),
+            counterpartyAlias: $this->getPointerUserBravo(),
+            description: self::PAYMENT_DESCRIPTION
         );
 
         static::assertNotNull($response);
@@ -58,9 +58,9 @@ class PaymentTest extends BunqSdkTestBase
         $this->skipTestIfNeededDueToInsufficientBalance();
 
         $paymentId = PaymentApiObject::create(
-            new AmountObject(self::PAYMENT_AMOUNT_IN_EUR, self::PAYMENT_CURRENCY),
-            $this->getSecondMonetaryAccountAlias(),
-            self::PAYMENT_DESCRIPTION
+            amount: new AmountObject(self::PAYMENT_AMOUNT_IN_EUR, self::PAYMENT_CURRENCY),
+            counterpartyAlias: $this->getSecondMonetaryAccountAlias(),
+            description: self::PAYMENT_DESCRIPTION
         );
 
         static::assertNotNull($paymentId);

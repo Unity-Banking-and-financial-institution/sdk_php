@@ -180,7 +180,7 @@ class MonetaryAccountExternalApiObject extends BunqModel
     /**
      * The profiles of the account.
      *
-     * @var MonetaryAccountProfileApiObject
+     * @var MonetaryAccountProfileApiObject[]
      */
     protected $monetaryAccountProfile;
 
@@ -225,6 +225,13 @@ class MonetaryAccountExternalApiObject extends BunqModel
      * @var OpenBankingAccountApiObject
      */
     protected $openBankingAccount;
+
+    /**
+     * The current available balance amount of the MonetaryAccount, converted to the user's default currency.
+     *
+     * @var AmountObject
+     */
+    protected $balanceConverted;
 
     /**
      * The budgets of the MonetaryAccount.
@@ -897,7 +904,7 @@ self::FIELD_SETTING => $setting],
     /**
      * The profiles of the account.
      *
-     * @return MonetaryAccountProfileApiObject
+     * @return MonetaryAccountProfileApiObject[]
      */
     public function getMonetaryAccountProfile()
     {
@@ -907,7 +914,7 @@ self::FIELD_SETTING => $setting],
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param MonetaryAccountProfileApiObject $monetaryAccountProfile
+     * @param MonetaryAccountProfileApiObject[] $monetaryAccountProfile
      */
     public function setMonetaryAccountProfile($monetaryAccountProfile)
     {
@@ -1032,6 +1039,26 @@ self::FIELD_SETTING => $setting],
     public function setOpenBankingAccount($openBankingAccount)
     {
         $this->openBankingAccount = $openBankingAccount;
+    }
+
+    /**
+     * The current available balance amount of the MonetaryAccount, converted to the user's default currency.
+     *
+     * @return AmountObject
+     */
+    public function getBalanceConverted()
+    {
+        return $this->balanceConverted;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param AmountObject $balanceConverted
+     */
+    public function setBalanceConverted($balanceConverted)
+    {
+        $this->balanceConverted = $balanceConverted;
     }
 
     /**
@@ -1236,6 +1263,10 @@ self::FIELD_SETTING => $setting],
         }
 
         if (!is_null($this->openBankingAccount)) {
+            return false;
+        }
+
+        if (!is_null($this->balanceConverted)) {
             return false;
         }
 

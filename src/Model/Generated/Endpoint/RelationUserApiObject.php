@@ -54,18 +54,46 @@ class RelationUserApiObject extends BunqModel
     protected $status;
 
     /**
-     * The account status of a user
+     * The account status of a user.
      *
      * @var string
      */
     protected $userStatus;
 
     /**
-     * The account status of a user
+     * The account sub-status of the user.
+     *
+     * @var string
+     */
+    protected $userSubStatus;
+
+    /**
+     * The account verification status of the user.
+     *
+     * @var string
+     */
+    protected $userVerificationStatus;
+
+    /**
+     * The account sub-status of the counter user.
      *
      * @var string
      */
     protected $counterUserStatus;
+
+    /**
+     * The account sub-status of the counter user.
+     *
+     * @var string
+     */
+    protected $counterUserSubStatus;
+
+    /**
+     * The account verification status of the counter user.
+     *
+     * @var string
+     */
+    protected $counterUserVerificationStatus;
 
     /**
      * Tap to Pay settings for the company employee.
@@ -202,7 +230,7 @@ class RelationUserApiObject extends BunqModel
     }
 
     /**
-     * The account status of a user
+     * The account status of a user.
      *
      * @return string
      */
@@ -222,7 +250,47 @@ class RelationUserApiObject extends BunqModel
     }
 
     /**
-     * The account status of a user
+     * The account sub-status of the user.
+     *
+     * @return string
+     */
+    public function getUserSubStatus()
+    {
+        return $this->userSubStatus;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param string $userSubStatus
+     */
+    public function setUserSubStatus($userSubStatus)
+    {
+        $this->userSubStatus = $userSubStatus;
+    }
+
+    /**
+     * The account verification status of the user.
+     *
+     * @return string
+     */
+    public function getUserVerificationStatus()
+    {
+        return $this->userVerificationStatus;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param string $userVerificationStatus
+     */
+    public function setUserVerificationStatus($userVerificationStatus)
+    {
+        $this->userVerificationStatus = $userVerificationStatus;
+    }
+
+    /**
+     * The account sub-status of the counter user.
      *
      * @return string
      */
@@ -239,6 +307,46 @@ class RelationUserApiObject extends BunqModel
     public function setCounterUserStatus($counterUserStatus)
     {
         $this->counterUserStatus = $counterUserStatus;
+    }
+
+    /**
+     * The account sub-status of the counter user.
+     *
+     * @return string
+     */
+    public function getCounterUserSubStatus()
+    {
+        return $this->counterUserSubStatus;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param string $counterUserSubStatus
+     */
+    public function setCounterUserSubStatus($counterUserSubStatus)
+    {
+        $this->counterUserSubStatus = $counterUserSubStatus;
+    }
+
+    /**
+     * The account verification status of the counter user.
+     *
+     * @return string
+     */
+    public function getCounterUserVerificationStatus()
+    {
+        return $this->counterUserVerificationStatus;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param string $counterUserVerificationStatus
+     */
+    public function setCounterUserVerificationStatus($counterUserVerificationStatus)
+    {
+        $this->counterUserVerificationStatus = $counterUserVerificationStatus;
     }
 
     /**
@@ -314,7 +422,23 @@ class RelationUserApiObject extends BunqModel
             return false;
         }
 
+        if (!is_null($this->userSubStatus)) {
+            return false;
+        }
+
+        if (!is_null($this->userVerificationStatus)) {
+            return false;
+        }
+
         if (!is_null($this->counterUserStatus)) {
+            return false;
+        }
+
+        if (!is_null($this->counterUserSubStatus)) {
+            return false;
+        }
+
+        if (!is_null($this->counterUserVerificationStatus)) {
             return false;
         }
 

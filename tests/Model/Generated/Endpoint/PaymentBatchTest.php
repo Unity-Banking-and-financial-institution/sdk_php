@@ -45,9 +45,9 @@ class PaymentBatchTest extends BunqSdkTestBase
 
         while (count($allPayment) < self::MAXIMUM_PAYMENT_ENTRIES) {
             $payment = new PaymentApiObject(
-                new AmountObject(self::PAYMENT_AMOUNT_DEFAULT, self::PAYMENT_CURRENCY),
-                $this->getPointerUserBravo(),
-                self::PAYMENT_DESCRIPTION
+                amount: new AmountObject(self::PAYMENT_AMOUNT_DEFAULT, self::PAYMENT_CURRENCY),
+                counterpartyAlias: $this->getPointerUserBravo(),
+                description: self::PAYMENT_DESCRIPTION
             );
 
             $allPayment[] = $payment;
