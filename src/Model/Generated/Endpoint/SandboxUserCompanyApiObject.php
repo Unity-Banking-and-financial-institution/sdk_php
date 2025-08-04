@@ -31,11 +31,18 @@ class SandboxUserCompanyApiObject extends BunqModel
     protected $apiKey;
 
     /**
-     * The user which was created.
+     * The user company which was created.
      *
-     * @var UserApiObject
+     * @var UserCompanyApiObject
      */
-    protected $user;
+    protected $userCompany;
+
+    /**
+     * The director of the company which was created.
+     *
+     * @var UserPersonApiObject
+     */
+    protected $userPerson;
 
     /**
      * The login code which the developer can use to log into their sandbox user.
@@ -87,23 +94,43 @@ class SandboxUserCompanyApiObject extends BunqModel
     }
 
     /**
-     * The user which was created.
+     * The user company which was created.
      *
-     * @return UserApiObject
+     * @return UserCompanyApiObject
      */
-    public function getUser()
+    public function getUserCompany()
     {
-        return $this->user;
+        return $this->userCompany;
     }
 
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param UserApiObject $user
+     * @param UserCompanyApiObject $userCompany
      */
-    public function setUser($user)
+    public function setUserCompany($userCompany)
     {
-        $this->user = $user;
+        $this->userCompany = $userCompany;
+    }
+
+    /**
+     * The director of the company which was created.
+     *
+     * @return UserPersonApiObject
+     */
+    public function getUserPerson()
+    {
+        return $this->userPerson;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param UserPersonApiObject $userPerson
+     */
+    public function setUserPerson($userPerson)
+    {
+        $this->userPerson = $userPerson;
     }
 
     /**
@@ -135,7 +162,11 @@ class SandboxUserCompanyApiObject extends BunqModel
             return false;
         }
 
-        if (!is_null($this->user)) {
+        if (!is_null($this->userCompany)) {
+            return false;
+        }
+
+        if (!is_null($this->userPerson)) {
             return false;
         }
 

@@ -56,10 +56,10 @@ class RequestInquiryTest extends BunqSdkTestBase
     private function sendRequest()
     {
         $response = RequestInquiryApiObject::create(
-            new AmountObject(self::REQUEST_AMOUNT_IN_EUR, self::REQUEST_CURRENCY),
-            $this->getSecondMonetaryAccountAlias(),
-            self::REQUEST_DESCRIPTION,
-            false
+            amountInquired: new AmountObject(self::REQUEST_AMOUNT_IN_EUR, self::REQUEST_CURRENCY),
+            counterpartyAlias: $this->getSecondMonetaryAccountAlias(),
+            description: self::REQUEST_DESCRIPTION,
+            allowBunqme: false
         );
 
         static::assertNotNull($response);
@@ -71,10 +71,9 @@ class RequestInquiryTest extends BunqSdkTestBase
     private function acceptRequest(int $requestResponseId)
     {
         $response = RequestResponseApiObject::update(
-            $requestResponseId,
-            $this->getSecondMonetaryAccountId(),
-            null,
-            self::REQUEST_STATUS_ACCEPTED
+            requestResponseId: $requestResponseId,
+            monetaryAccountId: $this->getSecondMonetaryAccountId(),
+            status: self::REQUEST_STATUS_ACCEPTED
         );
 
         static::assertNotNull($response);

@@ -85,13 +85,6 @@ class MonetaryAccountCardApiObject extends BunqModel
     protected $balance;
 
     /**
-     * The current real balance Amount of the MonetaryAccountCard.
-     *
-     * @var AmountObject
-     */
-    protected $balanceReal;
-
-    /**
      * The aliases for the MonetaryAccount.
      *
      * @var PointerObject[]
@@ -134,9 +127,16 @@ class MonetaryAccountCardApiObject extends BunqModel
     protected $relationUser;
 
     /**
+     * The current available balance amount of the MonetaryAccount, converted to the user's default currency.
+     *
+     * @var AmountObject
+     */
+    protected $balanceConverted;
+
+    /**
      * The profiles of the account.
      *
-     * @var MonetaryAccountProfileApiObject
+     * @var MonetaryAccountProfileApiObject[]
      */
     protected $monetaryAccountProfile;
 
@@ -464,26 +464,6 @@ class MonetaryAccountCardApiObject extends BunqModel
     }
 
     /**
-     * The current real balance Amount of the MonetaryAccountCard.
-     *
-     * @return AmountObject
-     */
-    public function getBalanceReal()
-    {
-        return $this->balanceReal;
-    }
-
-    /**
-     * @deprecated User should not be able to set values via setters, use constructor.
-     *
-     * @param AmountObject $balanceReal
-     */
-    public function setBalanceReal($balanceReal)
-    {
-        $this->balanceReal = $balanceReal;
-    }
-
-    /**
      * The aliases for the MonetaryAccount.
      *
      * @return PointerObject[]
@@ -604,9 +584,29 @@ class MonetaryAccountCardApiObject extends BunqModel
     }
 
     /**
+     * The current available balance amount of the MonetaryAccount, converted to the user's default currency.
+     *
+     * @return AmountObject
+     */
+    public function getBalanceConverted()
+    {
+        return $this->balanceConverted;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param AmountObject $balanceConverted
+     */
+    public function setBalanceConverted($balanceConverted)
+    {
+        $this->balanceConverted = $balanceConverted;
+    }
+
+    /**
      * The profiles of the account.
      *
-     * @return MonetaryAccountProfileApiObject
+     * @return MonetaryAccountProfileApiObject[]
      */
     public function getMonetaryAccountProfile()
     {
@@ -616,7 +616,7 @@ class MonetaryAccountCardApiObject extends BunqModel
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param MonetaryAccountProfileApiObject $monetaryAccountProfile
+     * @param MonetaryAccountProfileApiObject[] $monetaryAccountProfile
      */
     public function setMonetaryAccountProfile($monetaryAccountProfile)
     {
@@ -901,10 +901,6 @@ class MonetaryAccountCardApiObject extends BunqModel
             return false;
         }
 
-        if (!is_null($this->balanceReal)) {
-            return false;
-        }
-
         if (!is_null($this->alias)) {
             return false;
         }
@@ -926,6 +922,10 @@ class MonetaryAccountCardApiObject extends BunqModel
         }
 
         if (!is_null($this->relationUser)) {
+            return false;
+        }
+
+        if (!is_null($this->balanceConverted)) {
             return false;
         }
 

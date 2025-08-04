@@ -36,14 +36,11 @@ class MonetaryAccountBankTest extends BunqSdkTestBase
     {
         if (!is_null(static::$monetaryAccountBankToCloseId)) {
             MonetaryAccountBankApiObject::update(
-                static::$monetaryAccountBankToCloseId,
-                null,
-                null,
-                null,
-                self::STATUS,
-                self::SUB_STATUS,
-                self::REASON,
-                self::REASON_DESCRIPTION
+                monetaryAccountBankId: static::$monetaryAccountBankToCloseId,
+                status: self::STATUS,
+                subStatus: self::SUB_STATUS,
+                reason: self::REASON,
+                reasonDescription: self::REASON_DESCRIPTION
             );
         }
     }
@@ -56,8 +53,8 @@ class MonetaryAccountBankTest extends BunqSdkTestBase
     public function testCreateNewMonetaryAccount()
     {
         static::$monetaryAccountBankToCloseId = MonetaryAccountBankApiObject::create(
-            self::CURRENCY,
-            uniqid(self::PREFIX_MONETARY_ACCOUNT_DESCRIPTION)
+            currency: self::CURRENCY,
+            description: uniqid(self::PREFIX_MONETARY_ACCOUNT_DESCRIPTION)
         )->getValue();
 
         static::assertTrue(is_integer(static::$monetaryAccountBankToCloseId));

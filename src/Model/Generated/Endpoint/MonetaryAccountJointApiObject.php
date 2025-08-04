@@ -188,7 +188,7 @@ class MonetaryAccountJointApiObject extends BunqModel
     /**
      * The profiles of the account.
      *
-     * @var MonetaryAccountProfileApiObject
+     * @var MonetaryAccountProfileApiObject[]
      */
     protected $monetaryAccountProfile;
 
@@ -219,6 +219,13 @@ class MonetaryAccountJointApiObject extends BunqModel
      * @var CoOwnerInviteResponseApiObject
      */
     protected $coOwnerInvite;
+
+    /**
+     * The current available balance amount of the MonetaryAccount, converted to the user's default currency.
+     *
+     * @var AmountObject
+     */
+    protected $balanceConverted;
 
     /**
      * The budgets of the MonetaryAccount.
@@ -917,7 +924,7 @@ self::FIELD_SETTING => $setting],
     /**
      * The profiles of the account.
      *
-     * @return MonetaryAccountProfileApiObject
+     * @return MonetaryAccountProfileApiObject[]
      */
     public function getMonetaryAccountProfile()
     {
@@ -927,7 +934,7 @@ self::FIELD_SETTING => $setting],
     /**
      * @deprecated User should not be able to set values via setters, use constructor.
      *
-     * @param MonetaryAccountProfileApiObject $monetaryAccountProfile
+     * @param MonetaryAccountProfileApiObject[] $monetaryAccountProfile
      */
     public function setMonetaryAccountProfile($monetaryAccountProfile)
     {
@@ -1012,6 +1019,26 @@ self::FIELD_SETTING => $setting],
     public function setCoOwnerInvite($coOwnerInvite)
     {
         $this->coOwnerInvite = $coOwnerInvite;
+    }
+
+    /**
+     * The current available balance amount of the MonetaryAccount, converted to the user's default currency.
+     *
+     * @return AmountObject
+     */
+    public function getBalanceConverted()
+    {
+        return $this->balanceConverted;
+    }
+
+    /**
+     * @deprecated User should not be able to set values via setters, use constructor.
+     *
+     * @param AmountObject $balanceConverted
+     */
+    public function setBalanceConverted($balanceConverted)
+    {
+        $this->balanceConverted = $balanceConverted;
     }
 
     /**
@@ -1192,6 +1219,10 @@ self::FIELD_SETTING => $setting],
         }
 
         if (!is_null($this->coOwnerInvite)) {
+            return false;
+        }
+
+        if (!is_null($this->balanceConverted)) {
             return false;
         }
 
